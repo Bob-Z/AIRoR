@@ -15,9 +15,6 @@ def init():
     global uinput
     device = libevdev.Device()
     device.name = 'RoRBot fake device'
-    device.enable(libevdev.EV_KEY.BTN_LEFT)
-    device.enable(libevdev.EV_KEY.BTN_MIDDLE)
-    device.enable(libevdev.EV_KEY.BTN_RIGHT)
     device.enable(libevdev.EV_KEY.KEY_UP)
     device.enable(libevdev.EV_KEY.KEY_DOWN)
     device.enable(libevdev.EV_KEY.KEY_RIGHT)
