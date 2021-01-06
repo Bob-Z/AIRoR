@@ -30,7 +30,7 @@ def init():
     # init time
     time.sleep(1)
 
-    print('device is now at {}'.format(uinput.devnode))
+    #print('device is now at {}'.format(uinput.devnode))
 
 
 def reset_command():
