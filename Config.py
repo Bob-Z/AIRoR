@@ -8,4 +8,5 @@ def init(file_name):
     with open(file_name) as f:
         config = json.load(f)
 
-    print("Mode: " + config['mode'])
+    if 'mode' in config:
+        print("Mode: " + config['mode'])

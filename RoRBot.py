@@ -21,4 +21,5 @@ while True:
     Command.start_get_position()
 
     Mode.run()
+
     Command.stop_get_position()
