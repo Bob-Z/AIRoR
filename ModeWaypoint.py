@@ -2,13 +2,12 @@ import time
 
 import numpy as np
 
-import Input
 import Command
-import Traction
 import Event
+import Input
+import Traction
 
-waypoint = [512.0, 0.0, 512.0]
-waypoint = [412.0, 0.0, 512.0]
+waypoint = [[512.0, 0.0, 512.0], [412.0, 0.0, 512.0]]
 
 
 def init():
@@ -17,22 +16,29 @@ def init():
 
 def run():
     Traction.forward()
+
+    current_waypoint = 0
+
     while True:
         Event.wait()
 
         position = Input.get_position()
         rotation = Input.get_rotation()
-        waypoint_angle = calc_angle([position[0], position[2] + 1.0], [position[0], position[2]], [waypoint[0], waypoint[2]])
+
+        current_waypoint = check_waypoint_distance(current_waypoint, position)
+
+        waypoint_angle = calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
+                                    [waypoint[current_waypoint][0], waypoint[current_waypoint][2]])
 
         if waypoint_angle > 0:
             target_angle = waypoint_angle - 180.0
         else:
             target_angle = waypoint_angle + 180.0
-        print('target_angle: ', target_angle)
-        print('rotation:', rotation)
+        #print('target_angle: ', target_angle)
+        #print('rotation:', rotation)
 
         diff_rot = rotation[1] - target_angle
-        print('rotation[1] - target_angle:', diff_rot)
+        #print('rotation[1] - target_angle:', diff_rot)
 
         if abs(diff_rot) > 20.0:
             if diff_rot > 0.0:
@@ -83,3 +89,17 @@ def calc_angle(p0, p1, p2):
 
     angle = np.math.atan2(np.linalg.det([v0, v1]), np.dot(v0, v1))
     return np.degrees(angle)
+
+
+def check_waypoint_distance(current_waypoint, position):
+    global waypoint
+    dist_x = position[0] - waypoint[current_waypoint][0]
+    dist_y = position[2] - waypoint[current_waypoint][2]
+    distance = (dist_x * dist_x + dist_y * dist_y)
+    print("distance: ", distance)
+    # 3.0 meter square
+    if distance < 9.0:
+        new_waypoint = (current_waypoint + 1) % len(waypoint)
+        return new_waypoint
+
+    return current_waypoint
