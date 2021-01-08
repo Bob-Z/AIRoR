@@ -33,7 +33,7 @@ def run():
 
         manage_traction()
 
-        #manage_direction()
+        manage_direction()
 
         manage_reset()
 
@@ -50,8 +50,7 @@ def manage_traction():
             Traction.forward()
         if rand == 2:
             print("Go backward")
-            #Traction.backward()
-            Traction.forward()
+            Traction.backward()
 
         date_traction = datetime.datetime.now() + datetime.timedelta(seconds=random.random() * 10.0)
 
