@@ -3,15 +3,13 @@ import datetime
 import random
 import Command
 import Input
-import Config
-import math
+import Traction
 
 date_traction = None
 date_direction = None
 slow_speed = False
 previous_slow_speed = False
 slow_speed_timestamp = None
-forward = False
 
 
 def init():
@@ -29,59 +27,33 @@ def init():
 
 
 def run():
-    global slow_speed
-    global previous_slow_speed
+    while True:
+        global slow_speed
+        global previous_slow_speed
 
-    manage_traction()
+        manage_traction()
 
-    manage_direction()
+        #manage_direction()
 
-    manage_reset()
+        manage_reset()
 
-    time.sleep(0.01)
+        time.sleep(0.01)
 
 
 def manage_traction():
     global date_traction
-    global forward
 
     if datetime.datetime.now() > date_traction:
-        Command.reset_traction()
-
-        traction = random.randrange(3)
-
-        if traction == 0 or traction == 1:
+        rand = random.randrange(3)
+        if rand == 0 or rand == 1:
             print("Go forward")
-            forward = True
-        if traction == 2:
+            Traction.forward()
+        if rand == 2:
             print("Go backward")
-            forward = False
+            #Traction.backward()
+            Traction.forward()
 
         date_traction = datetime.datetime.now() + datetime.timedelta(seconds=random.random() * 10.0)
-
-    if 'max_speed_kmh' in Config.config:
-        speed = Input.get_speed()
-        norm_speed_ms = math.sqrt(speed[0] * speed[0] + speed[1] * speed[1] + speed[2] * speed[2])
-        norm_speed_kmh = norm_speed_ms / 1000.0 * 3600
-        max_speed_kmh = Config.config['max_speed_kmh']
-
-        if norm_speed_kmh < max_speed_kmh:
-            traction_on()
-        else:
-            Command.reset_traction()
-    else:
-        traction_on()
-
-
-def traction_on():
-    global forward
-
-    if forward is True:
-        Command.stop_backward()
-        Command.start_forward()
-    else:
-        Command.stop_forward()
-        Command.start_backward()
 
 
 def manage_direction():

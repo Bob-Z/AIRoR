@@ -1,6 +1,7 @@
 import sys
 import threading
 import datetime
+import Event
 
 started = False
 position = None
@@ -46,6 +47,10 @@ def read_stdin():
                         previous_timestamp = timestamp
                         previous_position = position
                     lock.release()
+
+                    Event.set_event()
+                    Event.clear_event()
+
                     #print("pos", position)
                     #print("rot", rotation)
                     #print("spd", speed)
