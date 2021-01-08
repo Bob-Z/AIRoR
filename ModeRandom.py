@@ -4,6 +4,7 @@ import random
 import Command
 import Input
 import Traction
+import Event
 
 date_traction = None
 date_direction = None
@@ -31,13 +32,13 @@ def run():
         global slow_speed
         global previous_slow_speed
 
+        Event.wait()
+
         manage_traction()
 
         manage_direction()
 
         manage_reset()
-
-        time.sleep(0.01)
 
 
 def manage_traction():
