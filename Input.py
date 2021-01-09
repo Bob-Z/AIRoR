@@ -2,6 +2,7 @@ import sys
 import threading
 import datetime
 import Event
+import subprocess
 
 started = False
 position = None
@@ -12,16 +13,19 @@ started = False
 
 
 def init():
-    thread = threading.Thread(target=read_stdin)
+    cmd = subprocess.Popen([sys.argv[1]], shell=True, stdout=subprocess.PIPE)
+
+    thread = threading.Thread(target=read_stdin, args=(cmd.stdout, ))
     thread.start()
 
 
-def read_stdin():
+def read_stdin(ror_input):
     previous_position = [0.0, 0.0, 0.0]
     previous_timestamp = datetime.datetime.now()
     while True:
         try:
-            for line in sys.stdin:
+            for byte_array_line in ror_input:
+                line = byte_array_line.decode('utf-8')
                 if line[0:9] == "Position:":
                     timestamp = datetime.datetime.now()
                     stripped = line.replace('\x1b[0m\n', '').replace(' ', '')

@@ -9,7 +9,7 @@ import Input
 import Mode
 import Traction
 
-Config.init(sys.argv[1])
+Config.init(sys.argv[2])
 Command.init()
 
 Input.init()
