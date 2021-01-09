@@ -88,40 +88,17 @@ def run():
         diff_rot = rotation[1] - target_angle
         # print('rotation[1] - target_angle:', diff_rot)
 
-        if abs(diff_rot) > 20.0:
-            if diff_rot > 0.0:
-                if diff_rot < 180.0:
-                    Command.reset_direction()
-                    Command.start_left()
-                else:
-                    Command.reset_direction()
-                    Command.start_right()
+        print("diff_rot = ", diff_rot)
+        if diff_rot > 0.0:
+            if diff_rot < 180.0:
+                Command.start_left(max(abs(diff_rot), 15))
             else:
-                if diff_rot < -180.0:
-                    Command.reset_direction()
-                    Command.start_left()
-                else:
-                    Command.reset_direction()
-                    Command.start_right()
-        elif abs(diff_rot) > 5:
-            if diff_rot > 0.0:
-                if diff_rot < 180.0:
-                    Command.start_left()
-                    time.sleep(0.05)
-                    Command.reset_direction()
-                else:
-                    Command.start_right()
-                    time.sleep(0.05)
-                    Command.reset_direction()
+                Command.start_right(max(abs(diff_rot), 15))
+        else:
+            if diff_rot < -180.0:
+                Command.start_left(max(abs(diff_rot), 15))
             else:
-                if diff_rot < -180.0:
-                    Command.start_left()
-                    time.sleep(0.05)
-                    Command.reset_direction()
-                else:
-                    Command.start_right()
-                    time.sleep(0.05)
-                    Command.reset_direction()
+                Command.start_right(max(abs(diff_rot), 15))
 
 
 ''' 
@@ -144,11 +121,11 @@ def check_waypoint_distance(current_waypoint, position):
     dist_x = position[0] - waypoint[current_waypoint][0]
     dist_y = position[2] - waypoint[current_waypoint][2]
     distance = (dist_x * dist_x + dist_y * dist_y)
-    print("distance: ", distance)
+    #print("distance: ", distance)
     # meter square
     if distance < 100.0:
         new_waypoint = (current_waypoint + 1) % len(waypoint)
-        print("waypoint ", new_waypoint)
+        print("next waypoint ", new_waypoint)
         return new_waypoint
 
     return current_waypoint

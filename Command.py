@@ -103,8 +103,8 @@ def stop_backward():
     reset_traction()
 
 
-def start_left(value=-100):
-    analog(libevdev.EV_ABS.ABS_X, value)
+def start_left(value=100):
+    analog(libevdev.EV_ABS.ABS_X, -(min(int(abs(value)), 100)))
 
 
 def stop_left():
@@ -112,7 +112,7 @@ def stop_left():
 
 
 def start_right(value=100):
-    analog(libevdev.EV_ABS.ABS_X, value)
+    analog(libevdev.EV_ABS.ABS_X, (min(int(abs(value)), 100)))
 
 
 def stop_right():
