@@ -8,6 +8,7 @@ import Input
 import Event
 
 is_forward = True
+max_speed_kmh = 0
 max_speed_increase = 0
 
 
@@ -15,18 +16,23 @@ def init():
     thread = threading.Thread(target=manage_input_event)
     thread.start()
 
+    global max_speed_kmh
+    if 'max_speed_kmh' in Config.config:
+        max_speed_kmh = Config.config['max_speed_kmh']
+
 
 def manage_input_event():
     global max_speed_increase
+    global max_speed_kmh
+
     while True:
         Event.wait()
         traction_off()
 
-        if 'max_speed_kmh' in Config.config:
+        if max_speed_kmh != 0:
             speed = Input.get_speed()
             norm_speed_ms = math.sqrt(speed[0] * speed[0] + speed[1] * speed[1] + speed[2] * speed[2])
             norm_speed_kmh = norm_speed_ms / 1000.0 * 3600
-            max_speed_kmh = Config.config['max_speed_kmh']
 
             if norm_speed_kmh < max_speed_kmh:
                 if norm_speed_kmh < max_speed_kmh - max_speed_increase:
@@ -66,3 +72,8 @@ def traction_on():
 
 def traction_off():
     Command.reset_traction()
+
+
+def set_max_speed(speed_kmh):
+    global max_speed_kmh
+    max_speed_kmh = speed_kmh
