@@ -1,33 +1,55 @@
-import random
+# https://cgit.freedesktop.org/libevdev/tree/include/linux/linux/input-event-codes.h
+# https://readthedocs.org/projects/python-evdev/downloads/pdf/latest/
+
 import time
-import datetime
-import socket
-import struct
 
 import libevdev
 
-device = None
-uinput = None
+fake_keyboard_device = None
+fake_joystick_device = None
+fake_keyboard_uinput = None
+fake_joystick_uinput = None
 
 
 def init():
-    global device
-    global uinput
-    device = libevdev.Device()
-    device.name = 'RoRBot fake device'
-    device.enable(libevdev.EV_KEY.KEY_UP)
-    device.enable(libevdev.EV_KEY.KEY_DOWN)
-    device.enable(libevdev.EV_KEY.KEY_RIGHT)
-    device.enable(libevdev.EV_KEY.KEY_LEFT)
-    device.enable(libevdev.EV_KEY.KEY_PAUSE)
-    device.enable(libevdev.EV_KEY.KEY_I)
+    global fake_keyboard_device
+    global fake_joystick_device
+    global fake_keyboard_uinput
+    global fake_joystick_uinput
 
-    uinput = device.create_uinput_device()
+    fake_keyboard_device = libevdev.Device()
+    fake_keyboard_device.name = 'RoRBot fake keyboard device'
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_UP)
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_DOWN)
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_RIGHT)
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_LEFT)
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_PAUSE)
+    fake_keyboard_device.enable(libevdev.EV_KEY.KEY_I)
+
+    fake_keyboard_uinput = fake_keyboard_device.create_uinput_device()
+
+    fake_joystick_device = libevdev.Device()
+    fake_joystick_device.name = 'RoRBot fake joystick device'
+
+    # This is needed to be identified by OIS as a joystick
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_TRIGGER)
+
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_X, libevdev.InputAbsInfo(minimum=-100, maximum=100))
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_Y, libevdev.InputAbsInfo(minimum=0, maximum=100))
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_Z, libevdev.InputAbsInfo(minimum=0, maximum=100))
+    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, absinfo)
+    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, absinfo)
+    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, absinfo)
+
+    fake_joystick_uinput = fake_joystick_device.create_uinput_device()
 
     # init time
     time.sleep(1)
 
-    #print('device is now at {}'.format(uinput.devnode))
+    print('fake keyboard device is now at {}'.format(fake_keyboard_uinput.devnode))
+    print('fake joystick device is now at {}'.format(fake_joystick_uinput.devnode))
+
+    reset_traction()
 
 
 def reset_command():
@@ -36,59 +58,65 @@ def reset_command():
 
 
 def reset_traction():
-    stop_forward()
-    stop_backward()
+    analog(libevdev.EV_ABS.ABS_Y, 0)
+    analog(libevdev.EV_ABS.ABS_Z, 0)
 
 
 def reset_direction():
-    stop_left()
-    stop_right()
+    analog(libevdev.EV_ABS.ABS_X, 0)
+
+
+def analog(key, value_in):
+    global fake_joystick_uinput
+    analog = [libevdev.InputEvent(key, value=value_in),
+              libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
+    fake_joystick_uinput.send_events(analog)
 
 
 def press(key):
-    global uinput
+    global fake_keyboard_uinput
     press = [libevdev.InputEvent(key, value=1),
              libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
-    uinput.send_events(press)
+    fake_keyboard_uinput.send_events(press)
 
 
 def release(key):
-    global uinput
+    global fake_keyboard_uinput
     release = [libevdev.InputEvent(key, value=0),
-             libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
-    uinput.send_events(release)
+               libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
+    fake_keyboard_uinput.send_events(release)
 
 
-def start_forward():
-    press(libevdev.EV_KEY.KEY_UP)
+def start_forward(value=100):
+    analog(libevdev.EV_ABS.ABS_Y, value)
 
 
 def stop_forward():
-    release(libevdev.EV_KEY.KEY_UP)
+    reset_traction()
 
 
-def start_backward():
-    press(libevdev.EV_KEY.KEY_DOWN)
+def start_backward(value=100):
+    analog(libevdev.EV_ABS.ABS_Z, value)
 
 
 def stop_backward():
-    release(libevdev.EV_KEY.KEY_DOWN)
+    reset_traction()
 
 
-def start_left():
-    press(libevdev.EV_KEY.KEY_LEFT)
+def start_left(value=-100):
+    analog(libevdev.EV_ABS.ABS_X, value)
 
 
 def stop_left():
-    release(libevdev.EV_KEY.KEY_LEFT)
+    analog(libevdev.EV_ABS.ABS_X, 0)
 
 
-def start_right():
-    press(libevdev.EV_KEY.KEY_RIGHT)
+def start_right(value=100):
+    analog(libevdev.EV_ABS.ABS_X, value)
 
 
 def stop_right():
-    release(libevdev.EV_KEY.KEY_RIGHT)
+    analog(libevdev.EV_ABS.ABS_X, 0)
 
 
 def start_get_position():
