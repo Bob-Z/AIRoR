@@ -119,6 +119,16 @@ def stop_right():
     analog(libevdev.EV_ABS.ABS_X, 0)
 
 
+def set_wheel(value_in):
+    value = int(value_in)
+    if value > 100:
+        value = 100
+    if value < -100:
+        value = -100
+
+    analog(libevdev.EV_ABS.ABS_X, value)
+
+
 def start_get_position():
     press(libevdev.EV_KEY.KEY_PAUSE)
 
