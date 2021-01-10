@@ -93,7 +93,7 @@ def traction_on(value):
 
 def traction_off(value):
     global go_forward
-    if is_forward is False:
+    if go_forward is False:
         Command.brake(0)
         Command.accelerate(value)
     else:
