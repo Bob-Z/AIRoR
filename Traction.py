@@ -10,6 +10,7 @@ import Event
 is_forward = True
 max_speed_kmh = 0
 max_speed_increase = 0
+traction_force = 100
 
 
 def init():
@@ -22,12 +23,17 @@ def init():
 
 
 def manage_input_event():
-    global max_speed_increase
     global max_speed_kmh
+    global traction_force
+
+    num_previous_speed = 4
+    previous_speed_array = []
+
+    for i in range(0, num_previous_speed):
+        previous_speed_array.append(1000000.0)
 
     while True:
         Event.wait()
-        traction_off()
 
         if max_speed_kmh != 0:
             speed = Input.get_speed()
@@ -35,19 +41,34 @@ def manage_input_event():
             norm_speed_kmh = norm_speed_ms / 1000.0 * 3600
 
             if norm_speed_kmh < max_speed_kmh:
-                if norm_speed_kmh < max_speed_kmh - max_speed_increase:
-                    traction_on() # full traction
-                else:
-                    traction_on() # fine traction
-                    time.sleep(0.05)
-                    traction_off()
+                traction_on(traction_force)
             else:
-                speed_diff = norm_speed_kmh - max_speed_kmh
-                if speed_diff > max_speed_increase:
-                    max_speed_increase = speed_diff
-                traction_off()
+                if norm_speed_kmh > max_speed_kmh + max_speed_kmh * 0.1:
+                    traction_off(traction_force)
+                else:
+                    traction_off(0)
+
+                traction_force -= 5
+
+            previous_speed_array.pop(0)
+            previous_speed_array.append(norm_speed_kmh)
+
+            prev_speed = 1000000.0
+            decelerate = True
+            for s in previous_speed_array:
+                if s <= prev_speed:
+                    prev_speed = s
+                    continue
+                else:
+                    decelerate = False
+
+            if decelerate is True:
+                traction_force += 5
+                if traction_force > 100:
+                    traction_force = 100
+
         else:
-            traction_on()
+            traction_on(100)
 
 
 def forward():
@@ -60,20 +81,30 @@ def backward():
     is_forward = False
 
 
-def traction_on():
+def traction_on(value):
+    print("traction on = ", value)
     global is_forward
     if is_forward is True:
-        Command.stop_backward()
-        Command.start_forward()
+        Command.brake(0)
+        Command.accelerate(value)
     else:
-        Command.stop_forward()
-        Command.start_backward()
+        Command.accelerate(0)
+        Command.brake(value)
 
 
-def traction_off():
-    Command.reset_traction()
+def traction_off(value):
+    print("traction off = ", value)
+    global is_forward
+    if is_forward is False:
+        Command.brake(0)
+        Command.accelerate(value)
+    else:
+        Command.accelerate(0)
+        Command.brake(value)
 
 
 def set_max_speed(speed_kmh):
     global max_speed_kmh
+    global traction_force
     max_speed_kmh = speed_kmh
+    traction_force = 100

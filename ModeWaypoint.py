@@ -93,17 +93,17 @@ def run():
             diff_rot = diff_rot - 360.0
         if diff_rot < -180.0:
             diff_rot = 360.0 + diff_rot
-        print("diff_rot = ", diff_rot)
+        #print("diff_rot = ", diff_rot)
 
         #wheel_force = max(5, abs(diff_rot) * 1.5)
         wheel_force = 10 + abs(diff_rot)
-        print("wheel force: ", wheel_force)
+        #print("wheel force: ", wheel_force)
 
         if diff_rot > 0.0:
-            print("left")
+            #print("left")
             Command.start_left(wheel_force)
         else:
-            print("right")
+            #print("right")
             Command.start_right(wheel_force)
 
 

@@ -49,18 +49,6 @@ def init():
     print('fake keyboard device is now at {}'.format(fake_keyboard_uinput.devnode))
     print('fake joystick device is now at {}'.format(fake_joystick_uinput.devnode))
 
-    reset_traction()
-
-
-def reset_command():
-    reset_traction()
-    reset_direction()
-
-
-def reset_traction():
-    analog(libevdev.EV_ABS.ABS_Y, 0)
-    analog(libevdev.EV_ABS.ABS_Z, 0)
-
 
 def reset_direction():
     analog(libevdev.EV_ABS.ABS_X, 0)
@@ -87,20 +75,12 @@ def release(key):
     fake_keyboard_uinput.send_events(release)
 
 
-def start_forward(value=100):
-    analog(libevdev.EV_ABS.ABS_Y, value)
+def accelerate(value=100):
+    analog(libevdev.EV_ABS.ABS_Y, min(int(abs(value)), 100))
 
 
-def stop_forward():
-    reset_traction()
-
-
-def start_backward(value=100):
-    analog(libevdev.EV_ABS.ABS_Z, value)
-
-
-def stop_backward():
-    reset_traction()
+def brake(value=100):
+    analog(libevdev.EV_ABS.ABS_Z, min(int(abs(value)), 100))
 
 
 def start_left(value=100):
