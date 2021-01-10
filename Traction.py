@@ -83,7 +83,7 @@ def backward():
 
 def traction_on(value):
     global go_forward
-    if is_forward is True:
+    if go_forward is True:
         Command.brake(0)
         Command.accelerate(value)
     else:
