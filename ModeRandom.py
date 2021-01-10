@@ -1,6 +1,7 @@
 import time
 import datetime
 import random
+
 import Command
 import Input
 import Traction
@@ -11,6 +12,7 @@ date_direction = None
 slow_speed = False
 previous_slow_speed = False
 slow_speed_timestamp = None
+go_forward = False
 
 
 def init():
@@ -43,15 +45,19 @@ def run():
 
 def manage_traction():
     global date_traction
+    global go_forward
 
     if datetime.datetime.now() > date_traction:
         rand = random.randrange(3)
         if rand == 0 or rand == 1:
-            print("Go forward")
+            if go_forward is False:
+                print("Go forward")
             Traction.forward()
+            go_forward = True
         if rand == 2:
             print("Go backward")
             Traction.backward()
+            go_forward = False
 
         date_traction = datetime.datetime.now() + datetime.timedelta(seconds=random.random() * 10.0)
 
@@ -60,18 +66,10 @@ def manage_direction():
     global date_direction
 
     if datetime.datetime.now() > date_direction:
-        Command.reset_direction()
+        direction = random.randrange(-100, 100)
+        Command.set_wheel(direction)
 
-        direction = random.randrange(3)
-
-        if direction == 0:
-            print("Go right")
-            Command.start_right()
-        elif direction == 1:
-            print("Go left")
-            Command.start_left()
-        else:
-            print("Go straight")
+        print("Steering wheel: ", direction)
 
         date_direction = datetime.datetime.now() + datetime.timedelta(seconds=random.random() * 10.0)
 
@@ -83,9 +81,12 @@ def manage_reset():
 
     speed = Input.get_speed()
     if abs(speed[0]) < 0.05 and abs(speed[1]) < 0.05 and abs(speed[2]) < 0.05:
-        print("Slow speed detected")
+        if slow_speed is False:
+            print("Slow speed detected")
         slow_speed = True
     else:
+        if slow_speed is True:
+            print("Slow speed reset")
         slow_speed = False
 
     if previous_slow_speed is False and slow_speed is True:

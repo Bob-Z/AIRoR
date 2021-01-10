@@ -7,7 +7,7 @@ import Config
 import Input
 import Event
 
-is_forward = True
+go_forward = True
 max_speed_kmh = 0
 max_speed_increase = 0
 traction_force = 100
@@ -72,18 +72,17 @@ def manage_input_event():
 
 
 def forward():
-    global is_forward
+    global go_forward
     is_forward = True
 
 
 def backward():
-    global is_forward
+    global go_forward
     is_forward = False
 
 
 def traction_on(value):
-    print("traction on = ", value)
-    global is_forward
+    global go_forward
     if is_forward is True:
         Command.brake(0)
         Command.accelerate(value)
@@ -93,8 +92,7 @@ def traction_on(value):
 
 
 def traction_off(value):
-    print("traction off = ", value)
-    global is_forward
+    global go_forward
     if is_forward is False:
         Command.brake(0)
         Command.accelerate(value)
