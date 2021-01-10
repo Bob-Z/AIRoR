@@ -3,6 +3,7 @@ import threading
 import datetime
 import Event
 import subprocess
+import math
 
 started = False
 position = None
@@ -92,6 +93,11 @@ def get_speed():
     lock.release()
 
     return ret_speed
+
+
+def get_norm_speed():
+    global speed
+    return math.sqrt(speed[0] * speed[0] + speed[1] * speed[1] + speed[2] * speed[2])
 
 
 def is_started():
