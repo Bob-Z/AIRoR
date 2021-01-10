@@ -36,8 +36,7 @@ def manage_input_event():
         Event.wait()
 
         if max_speed_kmh != 0:
-            speed = Input.get_speed()
-            norm_speed_ms = math.sqrt(speed[0] * speed[0] + speed[1] * speed[1] + speed[2] * speed[2])
+            norm_speed_ms = Input.get_norm_speed()
             norm_speed_kmh = norm_speed_ms / 1000.0 * 3600
 
             if norm_speed_kmh < max_speed_kmh:
