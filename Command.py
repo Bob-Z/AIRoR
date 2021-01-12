@@ -18,7 +18,7 @@ def init():
     global fake_joystick_uinput
 
     fake_keyboard_device = libevdev.Device()
-    fake_keyboard_device.name = 'RoRBot fake keyboard device'
+    fake_keyboard_device.name = 'AIRoR fake keyboard device'
     fake_keyboard_device.enable(libevdev.EV_KEY.KEY_UP)
     fake_keyboard_device.enable(libevdev.EV_KEY.KEY_DOWN)
     fake_keyboard_device.enable(libevdev.EV_KEY.KEY_RIGHT)
@@ -29,7 +29,7 @@ def init():
     fake_keyboard_uinput = fake_keyboard_device.create_uinput_device()
 
     fake_joystick_device = libevdev.Device()
-    fake_joystick_device.name = 'RoRBot fake joystick device'
+    fake_joystick_device.name = 'AIRoR fake joystick device'
 
     # This is needed to be identified by OIS as a joystick
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_TRIGGER)
