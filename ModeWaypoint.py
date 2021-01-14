@@ -89,6 +89,8 @@ def check_waypoint_distance(current_waypoint, position, speed):
 
     speed = Input.get_norm_speed()
     proximity_distance = speed * 0.5  # distance in 0.5 seconds
+    if proximity_distance < 2.0:
+        proximity_distance = 2.0
 
     if distance < proximity_distance:
         new_waypoint = (current_waypoint + 1) % len(waypoint)
