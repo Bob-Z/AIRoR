@@ -1,6 +1,6 @@
 import Config
-import ModeRandom
-import ModeWaypoint
+import ModeTruckRandom
+import ModeTruckWaypoint
 import sys
 import threading
 import time
@@ -11,20 +11,20 @@ def init():
     thread = threading.Thread(target=get_position)
     thread.start()
 
-    if Config.config['mode'] == 'random':
-        ModeRandom.init()
-    elif Config.config['mode'] == 'waypoint':
-        ModeWaypoint.init()
+    if Config.config['mode'] == 'truck_random':
+        ModeTruckRandom.init()
+    elif Config.config['mode'] == 'truck_waypoint':
+        ModeTruckWaypoint.init()
     else:
         print('Unknown mode ' + Config.config['mode'])
         sys.exit()
 
 
 def run():
-    if Config.config['mode'] == 'random':
-        ModeRandom.run()
-    elif Config.config['mode'] == 'waypoint':
-        ModeWaypoint.run()
+    if Config.config['mode'] == 'truck_random':
+        ModeTruckRandom.run()
+    elif Config.config['mode'] == 'truck_waypoint':
+        ModeTruckWaypoint.run()
     else:
         print('Unknown mode ' + Config.config['mode'])
         sys.exit()
