@@ -30,6 +30,7 @@ def init():
 
 
 def run():
+    print("Mode truck random")
     while True:
         global slow_speed
         global previous_slow_speed

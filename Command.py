@@ -37,9 +37,11 @@ def init():
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_X, libevdev.InputAbsInfo(minimum=-100, maximum=100))
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_Y, libevdev.InputAbsInfo(minimum=0, maximum=100))
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_Z, libevdev.InputAbsInfo(minimum=0, maximum=100))
-    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, absinfo)
-    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, absinfo)
-    #fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, absinfo)
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_SOUTH)
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_EAST)
+    # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, absinfo)
+    # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, absinfo)
+    # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, absinfo)
 
     fake_joystick_uinput = fake_joystick_device.create_uinput_device()
 
@@ -61,25 +63,41 @@ def analog(key, value_in):
     fake_joystick_uinput.send_events(analog)
 
 
-def press(key):
+def keyboard_press(key):
     global fake_keyboard_uinput
     press = [libevdev.InputEvent(key, value=1),
              libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
     fake_keyboard_uinput.send_events(press)
 
 
-def release(key):
+def keyboard_release(key):
     global fake_keyboard_uinput
     release = [libevdev.InputEvent(key, value=0),
                libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
     fake_keyboard_uinput.send_events(release)
 
 
+def joy_press(key):
+    global fake_joystick_uinput
+    press = [libevdev.InputEvent(key, value=1),
+             libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
+    fake_joystick_uinput.send_events(press)
+
+
+def joy_release(key):
+    global fake_joystick_uinput
+    release = [libevdev.InputEvent(key, value=0),
+               libevdev.InputEvent(libevdev.EV_SYN.SYN_REPORT, value=0)]
+    fake_joystick_uinput.send_events(release)
+
+
 def accelerate(value=100):
+    # print("Accelerate " + str(value))
     analog(libevdev.EV_ABS.ABS_Y, min(int(abs(value)), 100))
 
 
 def brake(value=100):
+    # print("Brake " + str(value))
     analog(libevdev.EV_ABS.ABS_Z, min(int(abs(value)), 100))
 
 
@@ -110,16 +128,28 @@ def set_wheel(value_in):
 
 
 def start_get_position():
-    press(libevdev.EV_KEY.KEY_PAUSE)
+    # print("start_get_position")
+    joy_press(libevdev.EV_KEY.BTN_SOUTH)
 
 
 def stop_get_position():
-    release(libevdev.EV_KEY.KEY_PAUSE)
+    # print("stop_get_position")
+    joy_release(libevdev.EV_KEY.BTN_SOUTH)
 
 
 def start_reset_truck():
-    press(libevdev.EV_KEY.KEY_I)
+    keyboard_press(libevdev.EV_KEY.KEY_I)
 
 
 def stop_reset_truck():
-    release(libevdev.EV_KEY.KEY_I)
+    keyboard_release(libevdev.EV_KEY.KEY_I)
+
+
+def start_center_rudder():
+    # print("start_center_rudder")
+    joy_press(libevdev.EV_KEY.BTN_EAST)
+
+
+def stop_center_rudder():
+    # print("stop_center_rudder")
+    joy_release(libevdev.EV_KEY.BTN_EAST)

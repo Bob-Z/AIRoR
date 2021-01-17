@@ -10,7 +10,6 @@ position = None
 rotation = None
 speed = None
 lock = threading.Lock()
-started = False
 
 
 def init():

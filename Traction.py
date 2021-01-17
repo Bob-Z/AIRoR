@@ -14,15 +14,16 @@ traction_force = 100
 
 
 def init():
-    thread = threading.Thread(target=manage_input_event)
-    thread.start()
-
     global max_speed_kmh
     if 'max_speed_kmh' in Config.config:
         max_speed_kmh = Config.config['max_speed_kmh']
 
+    thread = threading.Thread(target=manage_input_event)
+    thread.start()
+
 
 def manage_input_event():
+    print("Traction init")
     global max_speed_kmh
     global traction_force
 
@@ -72,12 +73,12 @@ def manage_input_event():
 
 def forward():
     global go_forward
-    is_forward = True
+    go_forward = True
 
 
 def backward():
     global go_forward
-    is_forward = False
+    go_forward = False
 
 
 def traction_on(value):

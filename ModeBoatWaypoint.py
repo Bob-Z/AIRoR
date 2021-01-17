@@ -3,13 +3,15 @@ import math
 import numpy as np
 
 import Command
+import Config
 import Event
 import Input
-import Traction
-import Config
-
+import Throttle
 
 waypoint = None
+RIGHT = 0
+LEFT = 1
+CENTER = 2
 
 
 def init():
@@ -18,13 +20,16 @@ def init():
 
 
 def run():
-    print("Mode truck waypoint: " + str(len(waypoint)) + " waypoints")
-    Traction.forward()
-
+    print("Mode boat waypoint: " + str(len(waypoint)) + " waypoints")
     current_waypoint = 0
     if waypoint[current_waypoint][3] != -1:
-        Traction.set_max_speed(waypoint[current_waypoint][3])
+        Throttle.set_max_speed(waypoint[current_waypoint][3])
+    print("waypoint ", current_waypoint)
     print("max speed ", waypoint[current_waypoint][3])
+
+    prev_rotation = [0.0, 0.0, 0.0]
+
+    direction = CENTER
 
     while True:
         Event.wait()
@@ -48,22 +53,45 @@ def run():
         diff_rot = rotation[1] - target_angle
         # print('rotation[1] - target_angle:', diff_rot)
 
-        if diff_rot > 180.0:
-            diff_rot = diff_rot - 360.0
-        if diff_rot < -180.0:
-            diff_rot = 360.0 + diff_rot
+        # Calculate the next step rotation difference with this step rotation speed
+        next_diff_rot = rotation[1] - (prev_rotation[1] - rotation[1]) - target_angle
+
+        prev_rotation = rotation
+
+        if next_diff_rot > 180.0:
+            next_diff_rot = next_diff_rot - 360.0
+        if next_diff_rot < -180.0:
+            next_diff_rot = 360.0 + next_diff_rot
         # print("diff_rot = ", diff_rot)
 
-        # wheel_force = max(5, abs(diff_rot) * 1.5)
-        wheel_force = 10 + abs(diff_rot)
-        # print("wheel force: ", wheel_force)
-
-        if diff_rot > 0.0:
+        if next_diff_rot > 1.0:
             # print("left")
-            Command.start_left(wheel_force)
-        else:
+            if direction != LEFT:
+                Command.stop_left()
+                Command.stop_right()
+                Command.start_center_rudder()
+                direction = LEFT
+            else:
+                Command.stop_center_rudder()
+                Command.start_left(100)
+        elif next_diff_rot < -1.0:
             # print("right")
-            Command.start_right(wheel_force)
+            if direction != RIGHT:
+                Command.stop_left()
+                Command.stop_right()
+                Command.start_center_rudder()
+                direction = RIGHT
+            else:
+                Command.stop_center_rudder()
+                Command.start_right(100)
+        else:
+            if direction != CENTER:
+                Command.stop_left()
+                Command.stop_right()
+                Command.start_center_rudder()
+                direction = CENTER
+            else:
+                Command.stop_center_rudder()
 
 
 ''' 
@@ -95,9 +123,9 @@ def check_waypoint_distance(current_waypoint, position, speed):
 
     if distance < proximity_distance:
         new_waypoint = (current_waypoint + 1) % len(waypoint)
-        print("next waypoint ", new_waypoint)
+        print("waypoint ", new_waypoint)
         if waypoint[new_waypoint][3] != -1:
-            Traction.set_max_speed(waypoint[new_waypoint][3])
+            Throttle.set_max_speed(waypoint[new_waypoint][3])
             print("max speed ", waypoint[new_waypoint][3])
 
         return new_waypoint

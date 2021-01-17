@@ -21,11 +21,11 @@ AIRPLANE_TOGGLE_ENGINES        JoystickButton       0 0
 
 
 ; BOAT
-BOAT_STEER_LEFT               JoystickAxis         0 0 LOWER+DEADZONE=0.25 
-BOAT_STEER_RIGHT              JoystickAxis         0 0 UPPER+DEADZONE=0.25 
-BOAT_THROTTLE_UP 			  JoystickAxis         0 5 UPPER
-BOAT_THROTTLE_DOWN 			  JoystickAxis         0 2 UPPER
-BOAT_REVERSE                  JoystickButton       0 1
+BOAT_STEER_LEFT               JoystickAxis         0 0 LOWER 
+BOAT_STEER_RIGHT              JoystickAxis         0 0 UPPER 
+BOAT_THROTTLE_UP 	      JoystickAxis         0 1 UPPER
+BOAT_THROTTLE_DOWN 	      JoystickAxis         0 2 UPPER
+;BOAT_REVERSE                  JoystickButton       0 3
 BOAT_CENTER_RUDDER            JoystickButton       0 2
 
 ; CAMERA
@@ -38,28 +38,29 @@ CAMERA_ROTATE_RIGHT            JoystickAxis         0 3 UPPER
 ; CHARACTER
 CHARACTER_BACKWARDS            JoystickAxis         0 1 UPPER 
 CHARACTER_FORWARD              JoystickAxis         0 1 LOWER 
-CHARACTER_JUMP                 JoystickButton       0 2 
+CHARACTER_JUMP                 JoystickButton       0 0 
 CHARACTER_LEFT                 JoystickAxis         0 0 LOWER 
 CHARACTER_RIGHT                JoystickAxis         0 0 UPPER 
 CHARACTER_RUN                  JoystickButton       0 0 
 
 ; COMMON
-COMMON_ENTER_OR_EXIT_TRUCK     JoystickButton       0 3 
-COMMON_LOCK                    JoystickPov          0 0 East
-COMMON_QUIT_GAME               JoystickButton       0 7 
-COMMON_TOGGLE_TRUCK_LIGHTS     JoystickPov          0 0 West
+;COMMON_ENTER_OR_EXIT_TRUCK     JoystickButton       0 3 
+;COMMON_LOCK                    JoystickPov          0 0 North
+;COMMON_QUIT_GAME               JoystickButton       0 7 
+;COMMON_TOGGLE_TRUCK_LIGHTS     JoystickPov          0 0 West
+COMMON_OUTPUT_POSITION         JoystickButton       0 1
 
 ; TRUCK
 TRUCK_ACCELERATE               JoystickAxis         0 1 UPPER
-TRUCK_AUTOSHIFT_UP             JoystickPov          0 0 North 
-TRUCK_AUTOSHIFT_DOWN           JoystickPov          0 0 South
+;TRUCK_AUTOSHIFT_UP             JoystickPov          0 0 North 
+;TRUCK_AUTOSHIFT_DOWN           JoystickPov          0 0 South
 TRUCK_BRAKE                    JoystickAxis         0 2 UPPER 
-TRUCK_HORN                     JoystickButton       0 8 
-TRUCK_PARKING_BRAKE            JoystickButton       0 5 
-TRUCK_SHIFT_DOWN               JoystickButton       0 1 
-TRUCK_SHIFT_UP                 JoystickButton       0 2 
-TRUCK_MANUAL_CLUTCH			   JoystickButton       0 4
-TRUCK_STARTER                  JoystickButton       0 0 
+;TRUCK_HORN                     JoystickButton       0 8 
+;TRUCK_PARKING_BRAKE            JoystickButton       0 5 
+;TRUCK_SHIFT_DOWN               JoystickButton       0 1 
+;TRUCK_SHIFT_UP                 JoystickButton       0 2 
+;TRUCK_MANUAL_CLUTCH			   JoystickButton       0 4
+;TRUCK_STARTER                  JoystickButton       0 0 
 TRUCK_STEER_LEFT               JoystickAxis         0 0 LOWER
 TRUCK_STEER_RIGHT              JoystickAxis         0 0 UPPER
-TRUCK_TOGGLE_CONTACT           JoystickButton       0 9 
+;TRUCK_TOGGLE_CONTACT           JoystickButton       0 9 
