@@ -6,8 +6,6 @@ Installation:
 
 sudo apt install python3-libevdev
 
-copy AIRoR_fake_joystick_device.map in ~/.rigsofrods/config
-
 Launch:
 
 AIROR.py <ROR binary> <Configuration file *.json>
