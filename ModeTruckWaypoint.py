@@ -26,6 +26,8 @@ def run():
         Traction.set_max_speed(waypoint[current_waypoint][3])
     print("max speed ", waypoint[current_waypoint][3])
 
+    prev_rotation = [0.0, 0.0, 0.0]
+
     while True:
         Event.wait()
 
@@ -48,17 +50,20 @@ def run():
         diff_rot = rotation[1] - target_angle
         # print('rotation[1] - target_angle:', diff_rot)
 
-        if diff_rot > 180.0:
-            diff_rot = diff_rot - 360.0
-        if diff_rot < -180.0:
-            diff_rot = 360.0 + diff_rot
+        next_diff_rot = rotation[1] - (prev_rotation[1] - rotation[1]) - target_angle
+        prev_rotation = rotation
+
+        if next_diff_rot > 180.0:
+            next_diff_rot = next_diff_rot - 360.0
+        if next_diff_rot < -180.0:
+            next_diff_rot = 360.0 + next_diff_rot
         # print("diff_rot = ", diff_rot)
 
         # wheel_force = max(5, abs(diff_rot) * 1.5)
-        wheel_force = 10 + abs(diff_rot)
+        wheel_force = 10 + abs(next_diff_rot)
         # print("wheel force: ", wheel_force)
 
-        if diff_rot > 0.0:
+        if next_diff_rot > 0.0:
             # print("left")
             Command.start_left(wheel_force)
         else:
