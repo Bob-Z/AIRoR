@@ -4,7 +4,7 @@ Artificial intelligence for Rigs of Rods.
 
 Installation:
 
-sudo apt install python3-libevdev
+sudo apt install python3-libevdev python3-numpy
 
 Launch:
 
