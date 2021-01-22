@@ -13,6 +13,8 @@ RIGHT = 0
 LEFT = 1
 CENTER = 2
 
+event_ahead_qty = 1
+
 
 def init():
     global waypoint
@@ -36,9 +38,8 @@ def run():
 
         position = Input.get_position()
         rotation = Input.get_rotation()
-        speed = Input.get_speed()
 
-        current_waypoint = check_waypoint_distance(current_waypoint, position, speed)
+        current_waypoint = check_waypoint_distance(current_waypoint, position)
 
         waypoint_angle = calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
                                     [waypoint[current_waypoint][0], waypoint[current_waypoint][2]])
@@ -47,14 +48,9 @@ def run():
             target_angle = waypoint_angle - 180.0
         else:
             target_angle = waypoint_angle + 180.0
-        # print('target_angle: ', target_angle)
-        # print('rotation:', rotation)
 
-        diff_rot = rotation[1] - target_angle
-        # print('rotation[1] - target_angle:', diff_rot)
-
-        # Calculate the next step rotation difference with this step rotation speed
-        next_diff_rot = rotation[1] - (prev_rotation[1] - rotation[1]) - target_angle
+        rotation_since_previous_event = prev_rotation[1] - rotation[1]
+        next_diff_rot = rotation[1] - (event_ahead_qty * rotation_since_previous_event) - target_angle
 
         prev_rotation = rotation
 
@@ -109,7 +105,7 @@ def calc_angle(p0, p1, p2):
     return np.degrees(angle)
 
 
-def check_waypoint_distance(current_waypoint, position, speed):
+def check_waypoint_distance(current_waypoint, position):
     global waypoint
     dist_x = position[0] - waypoint[current_waypoint][0]
     dist_y = position[2] - waypoint[current_waypoint][2]
@@ -127,6 +123,10 @@ def check_waypoint_distance(current_waypoint, position, speed):
         if waypoint[new_waypoint][3] != -1:
             Throttle.set_max_speed(waypoint[new_waypoint][3])
             print("max speed ", waypoint[new_waypoint][3])
+
+        if waypoint[current_waypoint][4] >= 0:
+            global event_ahead_qty
+            event_ahead_qty = waypoint[current_waypoint][4]
 
         return new_waypoint
 
