@@ -40,7 +40,7 @@ BOAT_STEER_RIGHT              JoystickAxis         0 0 UPPER\n\
 BOAT_THROTTLE_UP              JoystickAxis         0 1 UPPER\n\
 BOAT_THROTTLE_DOWN            JoystickAxis         0 2 UPPER\n\
 ;BOAT_REVERSE                  JoystickButton       0 3\n\
-BOAT_CENTER_RUDDER            JoystickButton       0 2\n\
+BOAT_CENTER_RUDDER            JoystickButton       0 3\n\
 \n\
 ; CAMERA\n\
 CAMERA_CHANGE                  JoystickButton       0 6\n\
@@ -63,6 +63,7 @@ CHARACTER_RUN                  JoystickButton       0 0\n\
 ;COMMON_QUIT_GAME               JoystickButton       0 7\n\
 ;COMMON_TOGGLE_TRUCK_LIGHTS     JoystickPov          0 0 West\n\
 COMMON_OUTPUT_POSITION         JoystickButton       0 1\n\
+COMMON_RESET_TRUCK             JoystickButton       0 2\n\
 \n\
 ; TRUCK\n\
 TRUCK_ACCELERATE               JoystickAxis         0 1 UPPER\n\
