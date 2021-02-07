@@ -17,20 +17,20 @@ input_map = "; -------------------------------------------\n\
 ; Version 1.1\n\
 \n\
 ; AIRPLANE\n\
-AIRPLANE_ELEVATOR_DOWN         JoystickAxis         0 1 UPPER\n\
-AIRPLANE_ELEVATOR_UP           JoystickAxis         0 1 LOWER\n\
-AIRPLANE_PARKING_BRAKE         JoystickButton       0 5\n\
-AIRPLANE_REVERSE               JoystickButton       0 4\n\
-AIRPLANE_RUDDER_LEFT           JoystickAxis         0 5 UPPER\n\
-AIRPLANE_RUDDER_RIGHT          JoystickAxis         0 2 UPPER\n\
-AIRPLANE_STEER_LEFT            JoystickAxis         0 0 LOWER+DEADZONE=0.15\n\
-AIRPLANE_STEER_RIGHT           JoystickAxis         0 0 UPPER+DEADZONE=0.15\n\
-AIRPLANE_THROTTLE_AXIS         None\n\
-AIRPLANE_THROTTLE_UP           JoystickPov          0 0 North\n\
-AIRPLANE_THROTTLE_FULL         JoystickButton       0 2\n\
-AIRPLANE_THROTTLE_NO           JoystickButton       0 1\n\
-AIRPLANE_THROTTLE_DOWN         JoystickPov          0 0 South\n\
-AIRPLANE_TOGGLE_ENGINES        JoystickButton       0 0\n\
+;;;AIRPLANE_ELEVATOR_UP           JoystickAxis         0 1 UPPER\n\
+;;;AIRPLANE_ELEVATOR_DOWN         JoystickAxis         0 2 UPPER\n\
+;AIRPLANE_PARKING_BRAKE         JoystickButton       0 5\n\
+;AIRPLANE_REVERSE               JoystickButton       0 4\n\
+AIRPLANE_RUDDER_LEFT           JoystickAxis         0 0 LOWER\n\
+AIRPLANE_RUDDER_RIGHT          JoystickAxis         0 0 UPPER\n\
+;AIRPLANE_STEER_LEFT            JoystickAxis         0 0 LOWER+DEADZONE=0.15\n\
+;AIRPLANE_STEER_RIGHT           JoystickAxis         0 0 UPPER+DEADZONE=0.15\n\
+;AIRPLANE_THROTTLE_AXIS         None\n\
+;AIRPLANE_THROTTLE_UP           JoystickPov          0 0 North\n\
+;AIRPLANE_THROTTLE_FULL         JoystickButton       0 2\n\
+;AIRPLANE_THROTTLE_NO           JoystickButton       0 1\n\
+;AIRPLANE_THROTTLE_DOWN         JoystickPov          0 0 South\n\
+;AIRPLANE_TOGGLE_ENGINES        JoystickButton       0 0\n\
 \n\
 ; BOAT\n\
 BOAT_STEER_LEFT               JoystickAxis         0 0 LOWER\n\
@@ -65,9 +65,9 @@ COMMON_RESET_TRUCK             JoystickButton       0 2\n\
 \n\
 ; TRUCK\n\
 TRUCK_ACCELERATE               JoystickAxis         0 1 UPPER\n\
+TRUCK_BRAKE                    JoystickAxis         0 2 UPPER\n\
 ;TRUCK_AUTOSHIFT_UP             JoystickPov          0 0 North\n\
 ;TRUCK_AUTOSHIFT_DOWN           JoystickPov          0 0 South\n\
-TRUCK_BRAKE                    JoystickAxis         0 2 UPPER\n\
 ;TRUCK_HORN                     JoystickButton       0 8\n\
 ;TRUCK_PARKING_BRAKE            JoystickButton       0 5\n\
 ;TRUCK_SHIFT_DOWN               JoystickButton       0 1\n\
@@ -77,6 +77,10 @@ TRUCK_BRAKE                    JoystickAxis         0 2 UPPER\n\
 TRUCK_STEER_LEFT               JoystickAxis         0 0 LOWER\n\
 TRUCK_STEER_RIGHT              JoystickAxis         0 0 UPPER\n\
 ;TRUCK_TOGGLE_CONTACT           JoystickButton       0 9\n\
+\n\
+; COMMANDS\n\
+COMMANDS_01                    JoystickButton       0 4\n\
+COMMANDS_02                    JoystickButton       0 5\n\
 "
 
 
@@ -120,6 +124,7 @@ def init():
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_EAST)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_NORTH)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_WEST)
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_Z)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, absinfo)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, absinfo)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, absinfo)
@@ -234,3 +239,23 @@ def start_center_rudder():
 def stop_center_rudder():
     # print("stop_center_rudder")
     joy_release(libevdev.EV_KEY.BTN_NORTH)
+
+
+def start_command_1():
+    #print("start_command_1")
+    joy_press(libevdev.EV_KEY.BTN_WEST)
+
+
+def stop_command_1():
+    #print("stop_command_1")
+    joy_release(libevdev.EV_KEY.BTN_WEST)
+
+
+def start_command_2():
+    #print("start_command_2")
+    joy_press(libevdev.EV_KEY.BTN_Z)
+
+
+def stop_command_2():
+    #print("stop_command_2")
+    joy_release(libevdev.EV_KEY.BTN_Z)
