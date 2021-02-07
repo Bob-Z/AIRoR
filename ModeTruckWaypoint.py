@@ -1,15 +1,15 @@
 import math
 
-import numpy as np
-
 import Command
 import Event
 import Input
 import Traction
 import Config
+import numpy
 
 
 waypoint = None
+event_ahead_qty = 1
 
 
 def init():
@@ -50,7 +50,10 @@ def run():
         diff_rot = rotation[1] - target_angle
         # print('rotation[1] - target_angle:', diff_rot)
 
-        next_diff_rot = rotation[1] - (prev_rotation[1] - rotation[1]) - target_angle
+        rotation_since_previous_event = prev_rotation[1] - rotation[1]
+        global event_ahead_qty
+        next_diff_rot = rotation[1] - (event_ahead_qty * rotation_since_previous_event) - target_angle
+
         prev_rotation = rotation
 
         if next_diff_rot > 180.0:
@@ -79,11 +82,11 @@ Inputs:
 
 
 def calc_angle(p0, p1, p2):
-    v0 = np.array(p0) - np.array(p1)
-    v1 = np.array(p2) - np.array(p1)
+    v0 = numpy.array(p0) - numpy.array(p1)
+    v1 = numpy.array(p2) - numpy.array(p1)
 
-    angle = np.math.atan2(np.linalg.det([v0, v1]), np.dot(v0, v1))
-    return np.degrees(angle)
+    angle = numpy.math.atan2(numpy.linalg.det([v0, v1]), numpy.dot(v0, v1))
+    return numpy.degrees(angle)
 
 
 def check_waypoint_distance(current_waypoint, position, speed):
@@ -104,6 +107,10 @@ def check_waypoint_distance(current_waypoint, position, speed):
         if waypoint[new_waypoint][3] != -1:
             Traction.set_max_speed(waypoint[new_waypoint][3])
             print("max speed ", waypoint[new_waypoint][3])
+
+        if waypoint[current_waypoint][4] >= 0:
+            global event_ahead_qty
+            event_ahead_qty = waypoint[current_waypoint][4]
 
         return new_waypoint
 

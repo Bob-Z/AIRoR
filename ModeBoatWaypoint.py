@@ -50,6 +50,7 @@ def run():
             target_angle = waypoint_angle + 180.0
 
         rotation_since_previous_event = prev_rotation[1] - rotation[1]
+        global event_ahead_qty
         next_diff_rot = rotation[1] - (event_ahead_qty * rotation_since_previous_event) - target_angle
 
         prev_rotation = rotation
