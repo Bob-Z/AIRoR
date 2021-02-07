@@ -4,7 +4,7 @@ import Command
 class HeliHeight:
     def __init__(self):
         self.previous_height = 0.0
-        self.event_ahead_qty = 5
+        self.event_ahead_qty = 10
         pass
 
     def event(self, position, rotation, waypoint):

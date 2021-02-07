@@ -2,6 +2,7 @@ import Config
 import ModeTruckRandom
 import ModeTruckWaypoint
 import ModeBoatWaypoint
+import ModeHeliWaypoint
 import sys
 import threading
 import time
@@ -23,6 +24,9 @@ def init():
     elif Config.config['mode'] == 'boat_waypoint':
         ModeBoatWaypoint.init()
         Throttle.init()
+    elif Config.config['mode'] == 'heli_waypoint':
+        ModeHeliWaypoint.init()
+        Throttle.init()
     else:
         print('Unknown mode ' + Config.config['mode'])
         sys.exit()
@@ -31,13 +35,12 @@ def init():
 def run():
     if Config.config['mode'] == 'truck_random':
         ModeTruckRandom.run()
-        Traction.init()
     elif Config.config['mode'] == 'truck_waypoint':
         ModeTruckWaypoint.run()
-        Traction.init()
     elif Config.config['mode'] == 'boat_waypoint':
         ModeBoatWaypoint.run()
-        Throttle.init()
+    elif Config.config['mode'] == 'heli_waypoint':
+        ModeHeliWaypoint.run()
     else:
         print('Unknown mode ' + Config.config['mode'])
         sys.exit()
