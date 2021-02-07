@@ -41,11 +41,11 @@ BOAT_THROTTLE_DOWN            JoystickAxis         0 2 UPPER\n\
 BOAT_CENTER_RUDDER            JoystickButton       0 3\n\
 \n\
 ; CAMERA\n\
-CAMERA_CHANGE                  JoystickButton       0 6\n\
-CAMERA_ROTATE_DOWN             JoystickAxis         0 4 UPPER\n\
-CAMERA_ROTATE_UP               JoystickAxis         0 4 LOWER\n\
-CAMERA_ROTATE_LEFT             JoystickAxis         0 3 LOWER\n\
-CAMERA_ROTATE_RIGHT            JoystickAxis         0 3 UPPER\n\
+;CAMERA_CHANGE                  JoystickButton       0 6\n\
+;CAMERA_ROTATE_DOWN             JoystickAxis         0 4 UPPER\n\
+;CAMERA_ROTATE_UP               JoystickAxis         0 4 LOWER\n\
+;CAMERA_ROTATE_LEFT             JoystickAxis         0 3 LOWER\n\
+;CAMERA_ROTATE_RIGHT            JoystickAxis         0 3 UPPER\n\
 \n\
 ; CHARACTER\n\
 CHARACTER_BACKWARDS            JoystickAxis         0 1 UPPER\n\
@@ -120,11 +120,16 @@ def init():
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_X, libevdev.InputAbsInfo(minimum=-100, maximum=100))
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_Y, libevdev.InputAbsInfo(minimum=0, maximum=100))
     fake_joystick_device.enable(libevdev.EV_ABS.ABS_Z, libevdev.InputAbsInfo(minimum=0, maximum=100))
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, libevdev.InputAbsInfo(minimum=0, maximum=100))
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, libevdev.InputAbsInfo(minimum=0, maximum=100))
+    fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, libevdev.InputAbsInfo(minimum=0, maximum=100))
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_SOUTH)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_EAST)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_NORTH)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_WEST)
     fake_joystick_device.enable(libevdev.EV_KEY.BTN_Z)
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_TL)
+    fake_joystick_device.enable(libevdev.EV_KEY.BTN_TR)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RX, absinfo)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RY, absinfo)
     # fake_joystick_device.enable(libevdev.EV_ABS.ABS_RZ, absinfo)
@@ -214,12 +219,12 @@ def set_wheel(value_in):
 
 
 def start_get_position():
-    # print("start_get_position")
+    #print("start_get_position")
     joy_press(libevdev.EV_KEY.BTN_SOUTH)
 
 
 def stop_get_position():
-    # print("stop_get_position")
+    #print("stop_get_position")
     joy_release(libevdev.EV_KEY.BTN_SOUTH)
 
 
