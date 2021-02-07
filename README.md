@@ -8,6 +8,8 @@ sudo apt install python3-libevdev python3-numpy
 
 Launch:
 
+Make sure you have only 1 joystick !
+
 AIROR.py <ROR binary> <Configuration file *.json>
   
 Select map and vehicle suited for your script.
