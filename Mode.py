@@ -48,7 +48,7 @@ def run():
 
 def get_position():
     while True:
-        Command.start_get_position()
+        Command.start_COMMON_OUTPUT_POSITION()
         time.sleep(0.05)
-        Command.stop_get_position()
+        Command.stop_COMMON_OUTPUT_POSITION()
         time.sleep(0.05)

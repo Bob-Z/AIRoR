@@ -64,31 +64,31 @@ def run():
         if next_diff_rot > 1.0:
             # print("left")
             if direction != LEFT:
-                Command.stop_left()
-                Command.stop_right()
-                Command.start_center_rudder()
+                Command.BOAT_STEER_LEFT(0)
+                Command.BOAT_STEER_RIGHT(0)
+                Command.start_BOAT_CENTER_RUDDER()
                 direction = LEFT
             else:
-                Command.stop_center_rudder()
-                Command.start_left(100)
+                Command.stop_BOAT_CENTER_RUDDER()
+                Command.BOAT_STEER_LEFT(100)
         elif next_diff_rot < -1.0:
             # print("right")
             if direction != RIGHT:
-                Command.stop_left()
-                Command.stop_right()
-                Command.start_center_rudder()
+                Command.BOAT_STEER_LEFT(0)
+                Command.BOAT_STEER_RIGHT(0)
+                Command.start_BOAT_CENTER_RUDDER()
                 direction = RIGHT
             else:
-                Command.stop_center_rudder()
-                Command.start_right(100)
+                Command.stop_BOAT_CENTER_RUDDER()
+                Command.BOAT_STEER_RIGHT(100)
         else:
             if direction != CENTER:
-                Command.stop_left()
-                Command.stop_right()
-                Command.start_center_rudder()
+                Command.BOAT_STEER_LEFT(0)
+                Command.BOAT_STEER_RIGHT(0)
+                Command.start_BOAT_CENTER_RUDDER()
                 direction = CENTER
             else:
-                Command.stop_center_rudder()
+                Command.stop_BOAT_CENTER_RUDDER()
 
 
 ''' 

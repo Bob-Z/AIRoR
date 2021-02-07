@@ -84,21 +84,21 @@ def backward():
 def traction_on(value):
     global go_forward
     if go_forward is True:
-        Command.brake(0)
-        Command.accelerate(value)
+        Command.TRUCK_BRAKE(0)
+        Command.TRUCK_ACCELERATE(value)
     else:
-        Command.accelerate(0)
-        Command.brake(value)
+        Command.TRUCK_ACCELERATE(0)
+        Command.TRUCK_BRAKE(value)
 
 
 def traction_off(value):
     global go_forward
     if go_forward is False:
-        Command.brake(0)
-        Command.accelerate(value)
+        Command.TRUCK_BRAKE(0)
+        Command.TRUCK_ACCELERATE(value)
     else:
-        Command.accelerate(0)
-        Command.brake(value)
+        Command.TRUCK_ACCELERATE(0)
+        Command.TRUCK_BRAKE(value)
 
 
 def set_max_speed(speed_kmh):

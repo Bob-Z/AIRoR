@@ -45,9 +45,9 @@ class HeliDirection:
 
         if next_diff_target > 0:
                 print("Go left")
-                Command.start_left(diff_target + 10.0)
+                Command.TRUCK_STEER_LEFT(diff_target + 10.0)
         elif next_diff_target < 0:
                 print("Go right")
-                Command.start_right(diff_target + 10.0)
+                Command.TRUCK_STEER_RIGHT(diff_target + 10.0)
         else:
             print("Go nowhere")

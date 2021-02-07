@@ -68,10 +68,10 @@ def run():
 
         if next_diff_rot > 0.0:
             # print("left")
-            Command.start_left(wheel_force)
+            Command.TRUCK_STEER_LEFT(wheel_force)
         else:
             # print("right")
-            Command.start_right(wheel_force)
+            Command.TRUCK_STEER_RIGHT(wheel_force)
 
 
 ''' 

@@ -182,85 +182,75 @@ def joy_release(key):
     fake_joystick_uinput.send_events(release)
 
 
-def accelerate(value=100):
+def TRUCK_ACCELERATE(value=100):
     # print("Accelerate " + str(value))
     analog(libevdev.EV_ABS.ABS_Y, min(int(abs(value)), 100))
 
 
-def brake(value=100):
+def TRUCK_BRAKE(value=100):
     # print("Brake " + str(value))
     analog(libevdev.EV_ABS.ABS_Z, min(int(abs(value)), 100))
 
 
-def start_left(value=100):
+def TRUCK_STEER_LEFT(value=100):
     analog(libevdev.EV_ABS.ABS_X, -(min(int(abs(value)), 100)))
 
 
-def stop_left():
-    analog(libevdev.EV_ABS.ABS_X, 0)
-
-
-def start_right(value=100):
+def TRUCK_STEER_RIGHT(value=100):
     analog(libevdev.EV_ABS.ABS_X, (min(int(abs(value)), 100)))
 
 
-def stop_right():
-    analog(libevdev.EV_ABS.ABS_X, 0)
-
-
-def set_wheel(value_in):
-    value = int(value_in)
-    if value > 100:
-        value = 100
-    if value < -100:
-        value = -100
-
-    analog(libevdev.EV_ABS.ABS_X, value)
-
-
-def start_get_position():
-    #print("start_get_position")
+def start_COMMON_OUTPUT_POSITION():
+    # print("start_COMMON_OUTPUT_POSITION")
     joy_press(libevdev.EV_KEY.BTN_SOUTH)
 
 
-def stop_get_position():
-    #print("stop_get_position")
+def stop_COMMON_OUTPUT_POSITION():
+    # print("stop_COMMON_OUTPUT_POSITION")
     joy_release(libevdev.EV_KEY.BTN_SOUTH)
 
 
-def start_reset_truck():
+def start_COMMON_RESET_TRUCK():
     joy_press(libevdev.EV_KEY.BTN_EAST)
 
 
-def stop_reset_truck():
+def stop_COMMON_RESET_TRUCK():
     joy_release(libevdev.EV_KEY.BTN_EAST)
 
 
-def start_center_rudder():
+def BOAT_STEER_LEFT(value=100):
+    TRUCK_STEER_LEFT(value)
+
+
+def BOAT_STEER_RIGHT(value=100):
+    TRUCK_STEER_RIGHT(value)
+
+
+def start_BOAT_CENTER_RUDDER():
     # print("start_center_rudder")
     joy_press(libevdev.EV_KEY.BTN_NORTH)
 
 
-def stop_center_rudder():
+def stop_BOAT_CENTER_RUDDER():
     # print("stop_center_rudder")
     joy_release(libevdev.EV_KEY.BTN_NORTH)
 
 
-def start_command_1():
-    #print("start_command_1")
+def start_COMMANDS_01():
+    # print("start_command_1")
     joy_press(libevdev.EV_KEY.BTN_WEST)
 
 
-def stop_command_1():
-    #print("stop_command_1")
+def stop_COMMANDS_01():
+    # print("stop_command_1")
     joy_release(libevdev.EV_KEY.BTN_WEST)
 
 
-def start_command_2():
-    #print("start_command_2")
+def start_COMMANDS_02():
+    # print("start_command_2")
     joy_press(libevdev.EV_KEY.BTN_Z)
 
 
-def stop_command_2():
-    #print("stop_command_2")
+def stop_COMMANDS_02():
+    # print("stop_command_2")
     joy_release(libevdev.EV_KEY.BTN_Z)

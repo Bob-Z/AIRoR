@@ -97,8 +97,8 @@ def manage_reset():
 
     if slow_speed is True and datetime.datetime.now() > slow_speed_timestamp + datetime.timedelta(seconds=4):
         print("Reset vehicle")
-        Command.start_reset_truck()
+        Command.start_COMMON_RESET_TRUCK()
         time.sleep(0.1)
-        Command.stop_reset_truck()
+        Command.stop_COMMON_RESET_TRUCK()
         slow_speed = False
         previous_slow_speed = False

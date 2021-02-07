@@ -35,18 +35,18 @@ def manage_input_event():
             norm_speed_kmh = norm_speed_ms / 1000.0 * 3600
 
             if norm_speed_kmh < max_speed_kmh - max_speed_kmh * 0.05:
-                Command.brake(0)
-                Command.accelerate(100)
+                Command.TRUCK_BRAKE(0)
+                Command.TRUCK_ACCELERATE(100)
             else:
                 if norm_speed_kmh > max_speed_kmh:
-                    Command.brake(100)
-                    Command.accelerate(0)
+                    Command.TRUCK_BRAKE(100)
+                    Command.TRUCK_ACCELERATE(0)
                 else:
-                    Command.brake(0)
-                    Command.accelerate(0)
+                    Command.TRUCK_BRAKE(0)
+                    Command.TRUCK_ACCELERATE(0)
         else:
-            Command.brake(0)
-            Command.accelerate(100)
+            Command.TRUCK_BRAKE(0)
+            Command.TRUCK_ACCELERATE(100)
 
 
 def set_max_speed(speed_kmh):

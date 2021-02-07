@@ -14,8 +14,8 @@ class HeliHeight:
         self.previous_height = position[1]
 
         if next_height < waypoint[1]:
-            Command.stop_command_2()
-            Command.start_command_1()
+            Command.stop_COMMANDS_02()
+            Command.start_COMMANDS_01()
         else:
-            Command.stop_command_1()
-            Command.start_command_2()
+            Command.stop_COMMANDS_01()
+            Command.start_COMMANDS_02()

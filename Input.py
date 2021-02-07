@@ -65,6 +65,8 @@ def read_stdin(ror_input):
                     # print("pos", position)
                     # print("rot", rotation)
                     # print("spd", speed)
+                else:
+                    print(line)
 
                 # print(line, end='')
         except UnicodeDecodeError:
