@@ -200,6 +200,16 @@ def TRUCK_STEER_RIGHT(value=100):
     analog(libevdev.EV_ABS.ABS_X, (min(int(abs(value)), 100)))
 
 
+def set_TRUCK_STEER(value_in):
+    value = int(value_in)
+    if value > 100:
+        value = 100
+    if value < -100:
+        value = -100
+
+    analog(libevdev.EV_ABS.ABS_X, value)
+
+
 def start_COMMON_OUTPUT_POSITION():
     # print("start_COMMON_OUTPUT_POSITION")
     joy_press(libevdev.EV_KEY.BTN_SOUTH)

@@ -1,52 +1,88 @@
-import Config
-import ModeTruckRandom
-import ModeTruckWaypoint
-import ModeBoatWaypoint
-import ModeHeliWaypoint
-import sys
 import threading
 import time
+
 import Command
-import Traction
-import Throttle
+import Config
+import DirectionBoatRotation
+import DirectionNone
+import DirectionTruckRandom
+import DirectionTruckRotation
+import Event
+import HeightHeli
+import HeightNone
+import Input
+import ResetNone
+import ResetSlowSpeed
+import SpeedBoatMax
+import SpeedNone
+import SpeedTruckMax
+import SpeedTruckRandom
+import TargetNone
+import TargetWaypoint
 
 
-def init():
-    thread = threading.Thread(target=get_position)
-    thread.start()
+class Mode:
+    def __init__(self):
+        self.thread = threading.Thread(target=push_position_button)
+        self.thread.start()
 
-    if Config.config['mode'] == 'truck_random':
-        ModeTruckRandom.init()
-        Traction.init()
-    elif Config.config['mode'] == 'truck_waypoint':
-        ModeTruckWaypoint.init()
-        Traction.init()
-    elif Config.config['mode'] == 'boat_waypoint':
-        ModeBoatWaypoint.init()
-        Throttle.init()
-    elif Config.config['mode'] == 'heli_waypoint':
-        ModeHeliWaypoint.init()
-        Throttle.init()
-    else:
-        print('Unknown mode ' + Config.config['mode'])
-        sys.exit()
+        self.target = TargetNone.TargetNone()
+        if 'target' in Config.config:
+            if Config.config['target'] == 'waypoint':
+                self.target = TargetWaypoint.TargetWaypoint()
+
+        self.direction = DirectionNone.DirectionNone()
+        if 'direction' in Config.config:
+            if Config.config['direction'] == 'truck_rotation':
+                self.direction = DirectionTruckRotation.DirectionTruckRotation()
+            elif Config.config['direction'] == 'truck_random':
+                self.direction = DirectionTruckRandom.DirectionTruckRandom()
+            elif Config.config['direction'] == 'boat_rotation':
+                self.direction = DirectionBoatRotation.DirectionBoatRotation()
+
+        self.speed = SpeedNone.SpeedNone()
+        if 'speed' in Config.config:
+            if Config.config['speed'] == 'truck_random':
+                self.speed = SpeedTruckRandom.SpeedTruckRandom()
+            elif Config.config['speed'] == 'truck_max':
+                self.speed = SpeedTruckMax.SpeedTruckMax()
+            elif Config.config['speed'] == 'boat_max':
+                self.speed = SpeedBoatMax.SpeedBoatMax()
+
+        self.height = HeightNone.HeightNone()
+        if 'height' in Config.config:
+            if Config.config['height'] == 'heli':
+                self.height = HeightHeli.HeightHeli()
+
+        self.reset = ResetNone.ResetNone()
+        if 'reset' in Config.config:
+            if Config.config['reset'] == 'slow':
+                self.reset = ResetSlowSpeed.ResetSlowSpeed()
+
+    def run(self):
+        while True:
+            Event.wait()
+
+            position = Input.get_position()
+            rotation = Input.get_rotation()
+            speed_ms = Input.get_speed_norm()
+
+            rot_diff, target_speed_ms, go_up = self.target.run(position, rotation, speed_ms)
+
+            self.direction.run(rot_diff)
+
+            self.speed.run(speed_ms, target_speed_ms)
+
+            self.height.run(go_up)
+
+            if self.reset.run(speed_ms) is True:
+                self.target.reset()
+                self.direction.reset()
+                self.speed.reset()
+                self.height.reset()
 
 
-def run():
-    if Config.config['mode'] == 'truck_random':
-        ModeTruckRandom.run()
-    elif Config.config['mode'] == 'truck_waypoint':
-        ModeTruckWaypoint.run()
-    elif Config.config['mode'] == 'boat_waypoint':
-        ModeBoatWaypoint.run()
-    elif Config.config['mode'] == 'heli_waypoint':
-        ModeHeliWaypoint.run()
-    else:
-        print('Unknown mode ' + Config.config['mode'])
-        sys.exit()
-
-
-def get_position():
+def push_position_button():
     while True:
         Command.start_COMMON_OUTPUT_POSITION()
         time.sleep(0.05)

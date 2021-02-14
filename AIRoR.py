@@ -17,5 +17,5 @@ print("Waiting for user activation")
 while Input.is_started() is False:
     time.sleep(0.1)
 
-Mode.init()
-Mode.run()
+mode = Mode.Mode()
+mode.run()

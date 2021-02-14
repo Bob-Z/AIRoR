@@ -1,2 +1,2 @@
-{"mode": "truck_random", "comment.max_speed_kmh":  30}
+{"direction": "truck_random", "speed": "truck_random", "reset": "slow"}
 

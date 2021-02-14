@@ -1,4 +1,4 @@
-{"mode": "truck_waypoint",
+{"target": "waypoint", "direction": "truck_rotation", "speed": "truck_max", "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
   [[882.132996, 0.120613, 1324.317139, 250, 1],

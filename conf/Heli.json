@@ -1,4 +1,4 @@
-{"mode": "heli_waypoint",
+{"target": "waypoint", "height": "heli", "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
 [[512.0,    10.000, 512.0,    0, 1],

@@ -103,7 +103,7 @@ def get_speed():
     return ret_speed
 
 
-def get_norm_speed():
+def get_speed_norm():
     global speed
     return math.sqrt(speed[0] * speed[0] + speed[1] * speed[1] + speed[2] * speed[2])
 
