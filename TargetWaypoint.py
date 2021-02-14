@@ -52,10 +52,10 @@ class TargetWaypoint:
             if self.waypoint[new_waypoint][3] != -1:
                 self.target_speed_ms = self.waypoint[new_waypoint][3] * 1000 / 3600
 
-            print("waypoint ", new_waypoint, "speed = ", self.target_speed_ms)
-
             if self.waypoint[self.current_waypoint][4] >= 0:
                 self.event_ahead_qty = self.waypoint[self.current_waypoint][4]
+
+            print("waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ", self.event_ahead_qty)
 
             self.current_waypoint = new_waypoint
 
