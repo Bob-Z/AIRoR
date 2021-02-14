@@ -1,22 +1,47 @@
 import Command
 
+CENTER = 0
+LEFT = 1
+RIGHT = 2
+
 
 class DirectionBoatRotation:
     def __init__(self):
+        self.direction = CENTER
         pass
 
     def run(self, rotation_diff):
-        # wheel_force = max(5, abs(diff_rot) * 1.5)
-        wheel_force = 10 + abs(rotation_diff)
-        # print("wheel force: ", wheel_force)
-
-        if rotation_diff > 0.0:
+        if rotation_diff > 1.0:
             # print("left")
-            Command.BOAT_STEER_LEFT(wheel_force)
-        else:
+            if self.direction != LEFT:
+                Command.BOAT_STEER_RIGHT(0)
+                Command.BOAT_STEER_LEFT(0)
+                Command.start_BOAT_CENTER_RUDDER()
+                self.direction = LEFT
+            else:
+                Command.stop_BOAT_CENTER_RUDDER()
+                Command.BOAT_STEER_LEFT(100)
+        elif rotation_diff < -1.0:
             # print("right")
-            Command.BOAT_STEER_RIGHT(wheel_force)
+            if self.direction != RIGHT:
+                Command.BOAT_STEER_RIGHT(0)
+                Command.BOAT_STEER_LEFT(0)
+                Command.start_BOAT_CENTER_RUDDER()
+                self.direction = RIGHT
+            else:
+                Command.stop_BOAT_CENTER_RUDDER()
+                Command.BOAT_STEER_RIGHT(100)
+        else:
+            if self.direction != CENTER:
+                Command.BOAT_STEER_RIGHT(0)
+                Command.BOAT_STEER_LEFT(0)
+                Command.start_BOAT_CENTER_RUDDER()
+                self.direction = CENTER
+            else:
+                Command.stop_BOAT_CENTER_RUDDER()
 
     def reset(self):
+        self.__init__()
         Command.BOAT_STEER_LEFT(0)
         Command.BOAT_STEER_RIGHT(0)
+        Command.stop_BOAT_CENTER_RUDDER()
