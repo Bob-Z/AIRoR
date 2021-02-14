@@ -1,4 +1,4 @@
-{"target": "waypoint", "direction": "boat_rotation", "speed": "boat_max", "reset": "slow",
+{"target": "waypoint", "direction": "boat_rotation", "speed": "boat_target", "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
 [

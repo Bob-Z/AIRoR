@@ -1,7 +1,7 @@
 import Command
 
 
-class SpeedBoatMax:
+class SpeedBoatTarget:
     def __init__(self):
         pass
 

@@ -1,7 +1,7 @@
 import datetime
 import random
 
-import SpeedTruckMax
+import SpeedTruckTarget
 
 
 class SpeedTruckRandom:
@@ -9,7 +9,7 @@ class SpeedTruckRandom:
         self.date_traction = datetime.datetime.now()
         self.go_forward = False
         self.random_speed_ms = 0.0
-        self.traction = SpeedTruckMax.SpeedTruckMax()
+        self.traction = SpeedTruckTarget.SpeedTruckTarget()
 
     def run(self, speed_ms, target_speed_ms):
         if datetime.datetime.now() > self.date_traction:

@@ -13,10 +13,11 @@ import HeightNone
 import Input
 import ResetNone
 import ResetSlowSpeed
-import SpeedBoatMax
+import SpeedBoatTarget
 import SpeedNone
 import SpeedTruckMax
 import SpeedTruckRandom
+import SpeedTruckTarget
 import TargetNone
 import TargetWaypoint
 
@@ -44,10 +45,12 @@ class Mode:
         if 'speed' in Config.config:
             if Config.config['speed'] == 'truck_random':
                 self.speed = SpeedTruckRandom.SpeedTruckRandom()
+            elif Config.config['speed'] == 'truck_target':
+                self.speed = SpeedTruckTarget.SpeedTruckTarget()
             elif Config.config['speed'] == 'truck_max':
                 self.speed = SpeedTruckMax.SpeedTruckMax()
-            elif Config.config['speed'] == 'boat_max':
-                self.speed = SpeedBoatMax.SpeedBoatMax()
+            elif Config.config['speed'] == 'boat_target':
+                self.speed = SpeedBoatTarget.SpeedBoatTarget()
 
         self.height = HeightNone.HeightNone()
         if 'height' in Config.config:

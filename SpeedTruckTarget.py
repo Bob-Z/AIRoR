@@ -1,7 +1,7 @@
 import Command
 
 
-class SpeedTruckMax:
+class SpeedTruckTarget:
     def __init__(self):
         self.current_target_speed_ms = 0.0
 
