@@ -18,5 +18,6 @@ class SpeedBoatMax:
                 Command.TRUCK_ACCELERATE(0)
 
     def reset(self):
+        self.__init__()
         Command.TRUCK_BRAKE(0)
         Command.TRUCK_ACCELERATE(0)
