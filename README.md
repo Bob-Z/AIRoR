@@ -2,9 +2,21 @@
 
 Artificial intelligence for Rigs of Rods.
 
+
 Installation:
 
 sudo apt install python3-libevdev python3-numpy
+
+If you have the following error at start-up:
+OSError: [Errno 13] Failed to open the uinput device: Permission denied
+
+Type the following in a terminal:
+
+sudo addgroup uinput
+sudo adduser $USER uinput
+
+and restart the machine
+
 
 Launch:
 
