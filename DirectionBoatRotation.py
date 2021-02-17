@@ -1,11 +1,12 @@
 import Command
+import DirectionNone
 
 CENTER = 0
 LEFT = 1
 RIGHT = 2
 
 
-class DirectionBoatRotation:
+class DirectionBoatRotation(DirectionNone.DirectionNone):
     def __init__(self):
         self.direction = CENTER
         pass

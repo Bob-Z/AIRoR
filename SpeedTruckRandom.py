@@ -1,10 +1,11 @@
 import datetime
 import random
 
+import SpeedNone
 import SpeedTruckTarget
 
 
-class SpeedTruckRandom:
+class SpeedTruckRandom(SpeedNone.SpeedNone):
     def __init__(self):
         self.date_traction = datetime.datetime.now()
         self.go_forward = False
@@ -30,6 +31,3 @@ class SpeedTruckRandom:
             print("Random speed: ", self.random_speed_ms)
 
         self.traction.run(speed_ms, self.random_speed_ms)
-
-    def reset(self):
-        self.__init__()

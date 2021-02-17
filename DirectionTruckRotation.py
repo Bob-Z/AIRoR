@@ -1,7 +1,8 @@
 import Command
+import DirectionNone
 
 
-class DirectionTruckRotation:
+class DirectionTruckRotation(DirectionNone.DirectionNone):
     def __init__(self):
         pass
 
@@ -18,5 +19,6 @@ class DirectionTruckRotation:
             Command.TRUCK_STEER_RIGHT(wheel_force)
 
     def reset(self):
+        self.__init__()
         Command.TRUCK_STEER_LEFT(0)
         Command.TRUCK_STEER_RIGHT(0)

@@ -1,7 +1,8 @@
 import Command
+import SpeedNone
 
 
-class SpeedTruckTarget:
+class SpeedTruckTarget(SpeedNone.SpeedNone):
     def __init__(self):
         self.current_target_speed_ms = 0.0
 

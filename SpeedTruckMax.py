@@ -1,7 +1,8 @@
 import Command
+import SpeedNone
 
 
-class SpeedTruckMax:
+class SpeedTruckMax(SpeedNone.SpeedNone):
     def __init__(self):
         pass
 

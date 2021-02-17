@@ -2,9 +2,10 @@ import math
 
 import Config
 import Math
+import TargetNone
 
 
-class TargetWaypoint:
+class TargetWaypoint(TargetNone.TargetNone):
     def __init__(self):
         self.waypoint = Config.config['waypoint']
         print("Target mode waypoint: " + str(len(self.waypoint)) + " waypoints")
@@ -55,7 +56,8 @@ class TargetWaypoint:
             if self.waypoint[self.current_waypoint][4] >= 0:
                 self.event_ahead_qty = self.waypoint[self.current_waypoint][4]
 
-            print("waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ", self.event_ahead_qty)
+            print("waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ",
+                  self.event_ahead_qty)
 
             self.current_waypoint = new_waypoint
 
@@ -98,6 +100,3 @@ class TargetWaypoint:
             self.go_up = True
         else:
             self.go_up = False
-
-    def reset(self):
-        self.__init__()

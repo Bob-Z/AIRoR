@@ -1,8 +1,9 @@
-import Config
 import Command
+import Config
+import SpeedNone
 
 
-class SpeedTruckThrottle:
+class SpeedTruckThrottle(SpeedNone.SpeedNone):
     def __init__(self):
         if 'throttle_percent' in Config.config:
             self.throttle_percent = Config.config['throttle_percent']
@@ -13,6 +14,3 @@ class SpeedTruckThrottle:
 
     def run(self, speed_ms, target_speed_ms):
         Command.TRUCK_ACCELERATE(self.throttle_percent)
-
-    def reset(self):
-        self.__init__()

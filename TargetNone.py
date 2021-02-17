@@ -6,4 +6,4 @@ class TargetNone:
         return 0.0, 0.0, 0.0
 
     def reset(self):
-        pass
+        self.__init__()

@@ -1,7 +1,8 @@
 import Command
+import SpeedNone
 
 
-class SpeedBoatTarget:
+class SpeedBoatTarget(SpeedNone.SpeedNone):
     def __init__(self):
         pass
 

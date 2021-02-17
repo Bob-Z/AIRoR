@@ -2,9 +2,10 @@ import datetime
 import random
 
 import Command
+import DirectionNone
 
 
-class DirectionTruckRandom:
+class DirectionTruckRandom(DirectionNone.DirectionNone):
     def __init__(self):
         self.date_direction = datetime.datetime.now()
 

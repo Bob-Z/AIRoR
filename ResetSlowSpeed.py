@@ -2,9 +2,10 @@ import datetime
 import time
 
 import Command
+import ResetNone
 
 
-class ResetSlowSpeed:
+class ResetSlowSpeed(ResetNone.ResetNone):
     def __init__(self):
         self.slow_speed = False
         self.previous_slow_speed = False
@@ -35,6 +36,3 @@ class ResetSlowSpeed:
             return True
 
         return False
-
-    def reset(self):
-        self.__init__()

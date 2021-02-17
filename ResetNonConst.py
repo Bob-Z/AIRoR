@@ -1,9 +1,10 @@
 import time
 
 import Command
+import ResetNone
 
 
-class ResetNonConst:
+class ResetNonConst(ResetNone.ResetNone):
     def __init__(self):
         self.is_move_detected = False
         self.is_target_speed_detected = False
@@ -55,5 +56,3 @@ class ResetNonConst:
 
         return False
 
-    def reset(self):
-        self.__init__()

@@ -6,4 +6,4 @@ class SpeedNone:
         pass
 
     def reset(self):
-        pass
+        self.__init__()
