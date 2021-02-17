@@ -18,6 +18,7 @@ import SpeedNone
 import SpeedTruckMax
 import SpeedTruckRandom
 import SpeedTruckTarget
+import SpeedTruckThrottle
 import TargetNone
 import TargetWaypoint
 
@@ -49,6 +50,8 @@ class Mode:
                 self.speed = SpeedTruckTarget.SpeedTruckTarget()
             elif Config.config['speed'] == 'truck_max':
                 self.speed = SpeedTruckMax.SpeedTruckMax()
+            elif Config.config['speed'] == 'truck_throttle':
+                self.speed = SpeedTruckThrottle.SpeedTruckThrottle()
             elif Config.config['speed'] == 'boat_target':
                 self.speed = SpeedBoatTarget.SpeedBoatTarget()
 
