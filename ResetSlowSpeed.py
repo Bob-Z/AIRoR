@@ -2,7 +2,6 @@ import datetime
 import time
 
 import Command
-import Input
 
 
 class ResetSlowSpeed:
@@ -32,9 +31,10 @@ class ResetSlowSpeed:
             Command.start_COMMON_RESET_TRUCK()
             time.sleep(0.1)
             Command.stop_COMMON_RESET_TRUCK()
-            self.slow_speed = False
-            self.previous_slow_speed = False
 
             return True
 
         return False
+
+    def reset(self):
+        self.__init__()

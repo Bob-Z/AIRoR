@@ -11,6 +11,7 @@ import Event
 import HeightHeli
 import HeightNone
 import Input
+import ResetNonConst
 import ResetNone
 import ResetSlowSpeed
 import SpeedBoatTarget
@@ -64,6 +65,8 @@ class Mode:
         if 'reset' in Config.config:
             if Config.config['reset'] == 'slow':
                 self.reset = ResetSlowSpeed.ResetSlowSpeed()
+            if Config.config['reset'] == 'non_const':
+                self.reset = ResetNonConst.ResetNonConst()
 
     def run(self):
         while True:
@@ -86,6 +89,7 @@ class Mode:
                 self.direction.reset()
                 self.speed.reset()
                 self.height.reset()
+                self.reset.reset()
 
 
 def push_position_button():
