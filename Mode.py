@@ -14,6 +14,8 @@ import Input
 import ResetNonConst
 import ResetNone
 import ResetSlowSpeed
+import SaveMap
+import SaveNone
 import SpeedBoatTarget
 import SpeedNone
 import SpeedTruckMax
@@ -68,6 +70,11 @@ class Mode:
             if Config.config['reset'] == 'non_const':
                 self.reset = ResetNonConst.ResetNonConst()
 
+        self.save = SaveNone.SaveNone()
+        if 'save' in Config.config:
+            if Config.config['save'] == 'map':
+                self.save = SaveMap.SaveMap()
+
     def run(self):
         while True:
             Event.wait()
@@ -90,6 +97,7 @@ class Mode:
                 self.speed.reset()
                 self.height.reset()
                 self.reset.reset()
+                self.save.reset(position)
 
 
 def push_position_button():
