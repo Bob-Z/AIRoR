@@ -200,7 +200,7 @@ def TRUCK_STEER_RIGHT(value=100):
     analog(libevdev.EV_ABS.ABS_X, (min(int(abs(value)), 100)))
 
 
-def set_TRUCK_STEER(value_in):
+def set_TRUCK_STEER(value):
     analog(libevdev.EV_ABS.ABS_X, value)
 
 
