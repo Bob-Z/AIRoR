@@ -12,7 +12,7 @@ import HeightHeli
 import HeightNone
 import Input
 import ResetNonConst
-import ResetNone
+import ResetOutOfBound
 import ResetSlowSpeed
 import SaveMap
 import SaveNone
@@ -63,12 +63,16 @@ class Mode:
             if Config.config['height'] == 'heli':
                 self.height = HeightHeli.HeightHeli()
 
-        self.reset = ResetNone.ResetNone()
+        self.reset = []
         if 'reset' in Config.config:
-            if Config.config['reset'] == 'slow':
-                self.reset = ResetSlowSpeed.ResetSlowSpeed()
-            if Config.config['reset'] == 'non_const':
-                self.reset = ResetNonConst.ResetNonConst()
+            all_reset = Config.config['reset'].split(',')
+            for r in all_reset:
+                if r == 'slow':
+                    self.reset.append(ResetSlowSpeed.ResetSlowSpeed())
+                if r == 'non_const':
+                    self.reset.append(ResetNonConst.ResetNonConst())
+                if r == 'out_of_bound':
+                    self.reset.append(ResetOutOfBound.ResetOutOfBound())
 
         self.save = SaveNone.SaveNone()
         if 'save' in Config.config:
@@ -91,12 +95,18 @@ class Mode:
 
             self.height.run(go_up)
 
-            if self.reset.run(speed_ms) is True:
+            is_reset = False
+            for r in self.reset:
+                if r.run(position, speed_ms) is True:
+                    is_reset = True
+
+            if is_reset is True:
                 self.target.reset()
                 self.direction.reset()
                 self.speed.reset()
                 self.height.reset()
-                self.reset.reset()
+                for r in self.reset:
+                    r.reset()
                 self.save.reset(position)
 
 

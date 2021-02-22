@@ -15,7 +15,7 @@ class ResetNonConst(ResetNone.ResetNone):
         self.const_step_qty = 0
         self.non_target_step_qty = 0
 
-    def run(self, current_speed_ms):
+    def run(self, position, current_speed_ms):
         if self.is_move_detected is False:
             if current_speed_ms > 0.1:
                 self.move_step_qty += 1
