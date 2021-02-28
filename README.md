@@ -20,7 +20,7 @@ and restart the machine
 
 Launch:
 
-Make sure you have only 1 joystick !
+Make sure you have no joystick plugged in !
 
 AIROR.py <ROR binary> <Configuration file *.json>
   
