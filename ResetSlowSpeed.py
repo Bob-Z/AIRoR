@@ -11,7 +11,7 @@ class ResetSlowSpeed(ResetNone.ResetNone):
         self.previous_slow_speed = False
         self.slow_speed_timestamp = datetime.datetime.now()
 
-    def run(self, current_speed_ms):
+    def run(self, position, current_speed_ms):
         if current_speed_ms < 0.05:
             if self.slow_speed is False:
                 print("Slow speed detected")
