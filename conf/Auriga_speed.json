@@ -1,4 +1,9 @@
-{"target": "waypoint", "direction": "truck_rotation", "speed": "truck_target", "reset": "slow",
+{
+  "map": "31.terrn2",
+  "target": "waypoint",
+  "direction": "truck_rotation",
+  "speed": "truck_target",
+  "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
 [

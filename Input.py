@@ -4,6 +4,7 @@ import subprocess
 import sys
 import threading
 
+import Config
 import Event
 
 started = False
@@ -15,7 +16,12 @@ lock = threading.Lock()
 
 
 def init():
-    cmd = subprocess.Popen([sys.argv[1]], shell=True, stdout=subprocess.PIPE)
+    args = [sys.argv[1]]
+
+    if 'map' in Config.config:
+        args += ['-map', Config.config['map']]
+
+    cmd = subprocess.Popen(args, shell=True, stdout=subprocess.PIPE)
 
     thread = threading.Thread(target=read_stdin, args=(cmd.stdout,))
     thread.start()
