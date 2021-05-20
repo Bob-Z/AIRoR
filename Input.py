@@ -19,9 +19,10 @@ def init():
     args = [sys.argv[1]]
 
     if 'map' in Config.config:
-        args += ['-map', Config.config['map']]
+        args.append('-map')
+        args.append(Config.config['map'])
 
-    cmd = subprocess.Popen(args, shell=True, stdout=subprocess.PIPE)
+    cmd = subprocess.Popen(args,  stdout=subprocess.PIPE)
 
     thread = threading.Thread(target=read_stdin, args=(cmd.stdout,))
     thread.start()
