@@ -24,6 +24,7 @@ import SpeedTruckTarget
 import SpeedTruckThrottle
 import TargetNone
 import TargetWaypoint
+import TargetWaypointReverse
 
 
 class Mode:
@@ -35,6 +36,8 @@ class Mode:
         if 'target' in Config.config:
             if Config.config['target'] == 'waypoint':
                 self.target = TargetWaypoint.TargetWaypoint()
+            elif Config.config['target'] == 'waypoint_reverse':
+                self.target = TargetWaypointReverse.TargetWaypointReverse()
 
         self.direction = DirectionNone.DirectionNone()
         if 'direction' in Config.config:

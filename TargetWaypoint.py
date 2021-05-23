@@ -6,7 +6,7 @@ import TargetNone
 
 
 class TargetWaypoint(TargetNone.TargetNone):
-    def __init__(self):
+    def __init__(self, reverse=False):
         self.waypoint = Config.config['waypoint']
         print("Target mode waypoint: " + str(len(self.waypoint)) + " waypoints")
 
@@ -27,6 +27,8 @@ class TargetWaypoint(TargetNone.TargetNone):
         self.previous_height = 0.0
         self.height_event_ahead_qty = 10
         self.go_up = False
+
+        self.reverse = reverse
 
     def run(self, position, rotation, speed_ms):
         self.check_waypoint_distance(position, speed_ms)
@@ -49,7 +51,13 @@ class TargetWaypoint(TargetNone.TargetNone):
             proximity_distance = 2.0
 
         if distance < proximity_distance:
-            new_waypoint = (self.current_waypoint + 1) % len(self.waypoint)
+            if self.reverse is False:
+                new_waypoint = (self.current_waypoint + 1) % len(self.waypoint)
+            else:
+                new_waypoint = (self.current_waypoint - 1);
+                if new_waypoint < 0:
+                    new_waypoint = len(self.waypoint) - 1
+
             if self.waypoint[new_waypoint][3] != -1:
                 self.target_speed_ms = self.waypoint[new_waypoint][3] * 1000 / 3600
 
