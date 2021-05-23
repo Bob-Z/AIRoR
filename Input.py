@@ -22,6 +22,21 @@ def init():
         args.append('-map')
         args.append(Config.config['map'])
 
+    if 'position' in Config.config:
+        args.append('-pos')
+        args.append(Config.config['position'])
+
+    if 'rotation' in Config.config:
+        args.append('-rot')
+        args.append(Config.config['rotation'])
+
+    if 'truck' in Config.config:
+        args.append('-truck')
+        args.append(Config.config['truck'])
+
+    if 'enter' in Config.config:
+        args.append('-enter')
+
     cmd = subprocess.Popen(args,  stdout=subprocess.PIPE)
 
     thread = threading.Thread(target=read_stdin, args=(cmd.stdout,))
