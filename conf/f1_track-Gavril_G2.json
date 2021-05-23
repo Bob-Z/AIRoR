@@ -1,4 +1,10 @@
-{"target": "waypoint", "direction": "truck_rotation", "speed": "truck_target", "reset": "slow",
+{
+  "map": "2af11UID-f1_testtrack.terrn2",
+  "truck": "gavrilb.truck",
+  "target": "waypoint",
+  "direction": "truck_rotation",
+  "speed": "truck_target",
+  "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
   [[882.132996, 0.120613, 1324.317139, 250, 1],
