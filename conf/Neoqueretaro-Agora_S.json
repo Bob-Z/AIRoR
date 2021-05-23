@@ -1,4 +1,13 @@
-{"target": "waypoint", "direction": "truck_rotation", "speed": "truck_target", "reset": "slow",
+{
+  "map": "NeoQueretaro.terrn2",
+  "position": "2418 0 1116",
+  "rotation": "180",
+  "truck": "95bbUID-agoras.truck",
+  "enter": "",
+  "target": "waypoint",
+  "direction": "truck_rotation",
+  "speed": "truck_target",
+  "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
 [[2389.266,    0.669, 1115.620,    10, 0],
