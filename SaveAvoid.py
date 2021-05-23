@@ -1,7 +1,7 @@
 import Config
 
 
-class SaveMap:
+class SaveAvoid:
     def __init__(self):
         pass
 
@@ -9,10 +9,10 @@ class SaveMap:
         pass
 
     def reset(self, position):
-        if 'map' not in Config.config:
-            Config.config['map'] = []
+        if 'avoid' not in Config.config:
+            Config.config['avoid'] = []
 
-        Config.config['map'].append(position)
+        Config.config['avoid'].append(position)
 
         Config.save()
 

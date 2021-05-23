@@ -14,7 +14,7 @@ import Input
 import ResetNonConst
 import ResetOutOfBound
 import ResetSlowSpeed
-import SaveMap
+import SaveAvoid
 import SaveNone
 import SpeedBoatTarget
 import SpeedNone
@@ -79,8 +79,8 @@ class Mode:
 
         self.save = SaveNone.SaveNone()
         if 'save' in Config.config:
-            if Config.config['save'] == 'map':
-                self.save = SaveMap.SaveMap()
+            if Config.config['save'] == 'avoid':
+                self.save = SaveAvoid.SaveAvoid()
 
     def run(self):
         while True:
