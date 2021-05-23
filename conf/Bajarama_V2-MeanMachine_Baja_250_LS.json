@@ -1,5 +1,7 @@
 {
 "map": "8c07UID-bajaramaV2.terrn2",
+"truck": "MM-Baja-250-LS.truck",
+"enter": "",
 "target": "waypoint",
 "direction": "truck_rotation",
 "speed": "truck_target",
