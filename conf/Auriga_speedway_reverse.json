@@ -1,8 +1,8 @@
 {
   "map": "31.terrn2",
-  "position": "954 0 536",
-  "rotation": "255",
-  "target": "waypoint",
+  "position": "947 0 500",
+  "rotation": "75",
+  "target": "waypoint_reverse",
   "direction": "truck_rotation",
   "speed": "truck_target",
   "reset": "slow",
