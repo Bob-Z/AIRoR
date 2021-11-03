@@ -1,8 +1,1 @@
-{
-  "speed": "truck_throttle",
-  "throttle_percent": 60.0,
-  "reset": "non_const,out_of_bound",
-  "bound": [150.0, 300.0, 5000.0, 5000.0],
-  "save": "avoid",
-  "avoid": [[2502.612, 0.525, 1035.515], [2502.846, 0.524, 1016.712], [1607.419, 0.432, 284.088], [1239.026, 0.444, 480.537], [265.09, 0.428, 572.169], [148.964, 0.43, 606.333], [2143.32, 0.73, 5001.739], [1835.578, 0.722, 5002.316], [1882.821, 0.725, 5026.29], [149.913, 0.438, 4906.991]]
-}
+{"map": "NeoQueretaro.terrn2", "position": "2490 0 2050", "rotation": "90", "truck": "gavrilb.truck", "enter": "", "target": "avoid", "direction": "truck_rotation", "speed": "truck_throttle", "throttle_percent": 60.0, "reset": "non_const,out_of_bound", "bound": [150.0, 300.0, 5000.0, 5000.0], "save": "avoid", "avoid": []}
