@@ -1,6 +1,7 @@
 import Command
 import Config
 import SpeedNone
+import datetime
 
 
 class SpeedTruckThrottle(SpeedNone.SpeedNone):
@@ -10,7 +11,12 @@ class SpeedTruckThrottle(SpeedNone.SpeedNone):
         else:
             self.throttle_percent = 50.0
 
-        print("Speed truck throttle : ", self.throttle_percent)
+        self.start_time = datetime.datetime.now()
+
+        print("[Speed truck throttle] ", self.throttle_percent, "%")
 
     def run(self, speed_ms, target_speed_ms):
-        Command.TRUCK_ACCELERATE(self.throttle_percent)
+        if datetime.datetime.now() > self.start_time + datetime.timedelta(seconds=0.8):
+            Command.TRUCK_ACCELERATE(self.throttle_percent)
+        else:  # Initial full throttle to start engine
+            Command.TRUCK_ACCELERATE(100.0)
