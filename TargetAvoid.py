@@ -20,9 +20,10 @@ class TargetAvoid(TargetNone.TargetNone):
         self.obstacle_ahead = False
 
         self.travel_duration_min_s = 1.0
-        self.travel_duration_max_s = 10.0
-        self.travel_duration_s = self.travel_duration_min_s
-        print("travel_duration = ", self.travel_duration_s)
+        self.travel_duration_max_s = 5.0
+        self.init_travel_duration_s = self.travel_duration_min_s
+        self.travel_duration_s = self.init_travel_duration_s
+        print("[Target avoid] travel_duration =", self.travel_duration_s)
 
     def reset(self):
         self.avoid_coordinate = Config.config['avoid']
@@ -37,10 +38,12 @@ class TargetAvoid(TargetNone.TargetNone):
 
         self.obstacle_ahead = False
 
-        self.travel_duration_s = self.travel_duration_s + 0.5
-        if self.travel_duration_s > self.travel_duration_max_s:
-            self.travel_duration_s = self.travel_duration_min_s
-        print("travel_duration = ", self.travel_duration_s)
+        self.init_travel_duration_s = self.init_travel_duration_s + 0.5
+        if self.init_travel_duration_s > self.travel_duration_max_s:
+            self.init_travel_duration_s = self.travel_duration_min_s
+
+        self.travel_duration_s = self.init_travel_duration_s
+        print("travel_duration = ", self.travel_duration_s, "s")
 
     def run(self, position, rotation, speed_ms):
         current_timestamp = datetime.datetime.now()
@@ -61,40 +64,41 @@ class TargetAvoid(TargetNone.TargetNone):
     def find_avoidance_parameters(self, position, rotation):
         speed_ms = 10.0  # FIXME hard coded value
 
-        travel_distance = speed_ms * self.travel_duration_s
+        travel_distance_m = speed_ms * self.travel_duration_s
         current_rotation = rotation[1]
 
-        if self.is_angle_ok(position, current_rotation, travel_distance) is True:
+        if self.is_angle_ok(position, current_rotation, travel_distance_m) is True:
             if self.obstacle_ahead is True:
-                print("[TargetAvoid] No more obstacle ahead")
+                print("[TargetAvoid] No more obstacle ahead within",travel_distance_m,"m,",self.travel_duration_s,"s")
                 self.obstacle_ahead = False
             self.rot_diff = 0
             self.target_speed_ms = speed_ms
             return
 
-        while travel_distance > 1.0:
+        while self.travel_duration_s > 0.1:
             for rot_diff in range(5, 90, 5):
                 # print("trying rotation", current_rotation + rot_diff)
-                if self.is_angle_ok(position, current_rotation + rot_diff, travel_distance) is True:
+                if self.is_angle_ok(position, current_rotation + rot_diff, travel_distance_m) is True:
                     # print("rotation", -rot_diff, "OK")
                     self.rot_diff = -rot_diff
                     self.target_speed_ms = speed_ms
                     return
                 # print("trying rotation", current_rotation - rot_diff)
-                if self.is_angle_ok(position, current_rotation - rot_diff, travel_distance) is True:
+                if self.is_angle_ok(position, current_rotation - rot_diff, travel_distance_m) is True:
                     # print("rotation", rot_diff, "OK")
                     self.rot_diff = rot_diff
                     self.target_speed_ms = speed_ms
                     return
 
-            print("[TargetAvoid] dead end")
-            travel_distance = travel_distance / 2.0
-            print("travel_distance = ", travel_distance)
+            print("[TargetAvoid] dead end within", travel_distance_m,"m,",self.travel_duration_s,"s")
+            self.travel_duration_s = self.travel_duration_s / 2.0
+            travel_distance_m = speed_ms * self.travel_duration_s
+            print("Lower travel distance to", travel_distance_m,"m,",self.travel_duration_s,"s")
 
     def is_angle_ok(self, position, rotation, distance_m):
         # print("Checking rotation", rotation)
 
-        # Build rectangle and check it avoid everything
+        # Build rectangle and check it avoids everything
         rect = [
             [
                 0,
@@ -166,7 +170,7 @@ class TargetAvoid(TargetNone.TargetNone):
             test_point = [coord[0], coord[2]]
             if Math.point_in_rectangle(test_point, final_rect) is True:
                 if self.obstacle_ahead is False:
-                    print("[TargetAvoid] Obstacle ahead")
+                    print("[TargetAvoid] Obstacle within",distance_m,"m")
                     self.obstacle_ahead = True
                 return False
 
