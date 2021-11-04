@@ -19,8 +19,8 @@ class TargetAvoid(TargetNone.TargetNone):
 
         self.obstacle_ahead = False
 
-        self.travel_duration_min_s = 1.0
-        self.travel_duration_max_s = 5.0
+        self.travel_duration_min_s = 3.0
+        self.travel_duration_max_s = 15.0
         self.init_travel_duration_s = self.travel_duration_min_s
         self.travel_duration_s = self.init_travel_duration_s
         print("[Target avoid] travel_duration =", self.travel_duration_s)
@@ -62,7 +62,7 @@ class TargetAvoid(TargetNone.TargetNone):
             return 0, self.target_speed_ms, self.go_up
 
     def find_avoidance_parameters(self, position, rotation):
-        speed_ms = 10.0  # FIXME hard coded value
+        speed_ms = 2.8  # FIXME hard coded value
 
         travel_distance_m = speed_ms * self.travel_duration_s
         current_rotation = rotation[1]
