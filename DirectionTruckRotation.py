@@ -5,7 +5,7 @@ import DirectionNone
 class DirectionTruckRotation(DirectionNone.DirectionNone):
     def __init__(self):
         self.previous_force = 0
-        self.smoothness = 10
+        self.smoothness = 30
         pass
 
     def run(self, rotation_diff):
@@ -23,14 +23,12 @@ class DirectionTruckRotation(DirectionNone.DirectionNone):
 
         new_wheel_force = abs(self.previous_force)
 
-        if self.previous_force > 10.0:
+        if self.previous_force > 0.0:
             # print("left")
             Command.TRUCK_STEER_LEFT(new_wheel_force + 10)
-        elif self.previous_force < -10.0:
+        else :
             # print("right")
             Command.TRUCK_STEER_RIGHT(new_wheel_force + 10)
-        else:
-            Command.TRUCK_STEER_RIGHT(0)
 
     def reset(self):
         self.__init__()
