@@ -118,7 +118,8 @@ class Mode:
                     is_reset = True
 
             if is_reset is True:
-                self.target.reset()
+                for t in self.target:
+                    t.reset()
                 self.direction.reset()
                 self.speed.reset()
                 self.height.reset()
