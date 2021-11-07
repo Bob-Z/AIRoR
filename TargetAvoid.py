@@ -20,7 +20,7 @@ class TargetAvoid(TargetNone.TargetNone):
         self.obstacle_ahead = False
 
         self.travel_duration_min_s = 3.0
-        self.travel_duration_max_s = 15.0
+        self.travel_duration_max_s = 8.0
         self.init_travel_duration_s = self.travel_duration_min_s
         self.travel_duration_s = self.init_travel_duration_s
         print("[Target avoid] travel_duration =", self.travel_duration_s)
@@ -45,7 +45,7 @@ class TargetAvoid(TargetNone.TargetNone):
         self.travel_duration_s = self.init_travel_duration_s
         print("travel_duration = ", self.travel_duration_s, "s")
 
-    def run(self, position, rotation, speed_ms):
+    def run(self, position, rotation, speed_ms, rot_diff, target_speed_ms, go_up):
         current_timestamp = datetime.datetime.now()
 
         if current_timestamp - self.timestamp > datetime.timedelta(seconds=0.0):  # FIXME: hard coded value

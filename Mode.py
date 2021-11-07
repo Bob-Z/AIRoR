@@ -34,17 +34,20 @@ class Mode:
         self.thread = threading.Thread(target=push_position_button)
         self.thread.start()
 
-        self.target = TargetNone.TargetNone()
+        self.target = []
         if 'target' in Config.config:
-            if Config.config['target'] == 'waypoint':
-                self.target = TargetWaypoint.TargetWaypoint()
-            elif Config.config['target'] == 'waypoint_reverse':
-                self.target = TargetWaypointReverse.TargetWaypointReverse()
-            elif Config.config['target'] == 'avoid':
-                self.target = TargetAvoid.TargetAvoid()
-            elif Config.config['target'] == 'random_waypoint':
-                self.target = TargetRandomWaypoint.TargetRandomWaypoint()
-
+            all_target = Config.config['target'].split(',')
+            for t in all_target:
+                if t == 'waypoint':
+                    self.target.append(TargetWaypoint.TargetWaypoint())
+                elif t == 'waypoint_reverse':
+                    self.target.append(TargetWaypointReverse.TargetWaypointReverse())
+                elif t == 'avoid':
+                    self.target.append(TargetAvoid.TargetAvoid())
+                elif t == 'random_waypoint':
+                    self.target.append(TargetRandomWaypoint.TargetRandomWaypoint())
+        else:
+            self.target = [TargetNone.TargetNone()]
 
         self.direction = DirectionNone.DirectionNone()
         if 'direction' in Config.config:
@@ -97,7 +100,11 @@ class Mode:
             rotation = Input.get_rotation()
             speed_ms = Input.get_speed_norm()
 
-            rot_diff, target_speed_ms, go_up = self.target.run(position, rotation, speed_ms)
+            rot_diff = 0.0
+            target_speed_ms = 0.0
+            go_up = False
+            for t in self.target:
+                rot_diff, target_speed_ms, go_up = t.run(position, rotation, speed_ms, rot_diff, target_speed_ms, go_up)
 
             self.direction.run(rot_diff)
 

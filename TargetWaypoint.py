@@ -30,7 +30,7 @@ class TargetWaypoint(TargetNone.TargetNone):
 
         self.reverse = reverse
 
-    def run(self, position, rotation, speed_ms):
+    def run(self, position, rotation, speed_ms, rot_diff, target_speed_ms, go_up):
         self.check_waypoint_distance(position, speed_ms)
 
         self.check_rotation(position, rotation)
