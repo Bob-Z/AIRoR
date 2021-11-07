@@ -32,6 +32,11 @@ class TargetRandomWaypoint(TargetNone.TargetNone):
         self.new_waypoint_timeout = 15*60 # 15 minutes
         self.timeout_start = datetime.datetime.now()
 
+    def reset(self):
+        self.rand_x = self.get_random_x()
+        self.rand_y = self.get_random_y()
+        print("[Target random waypoint] reset - new way point", self.rand_x, self.rand_y)
+
     def run(self, position, rotation, speed_ms, rot_diff, target_speed_ms, go_up):
         self.check_waypoint_distance(position, speed_ms)
 
