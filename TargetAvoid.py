@@ -76,7 +76,7 @@ class TargetAvoid(TargetNone.TargetNone):
             self.target_speed_ms = speed_ms
             return
 
-        while self.travel_duration_s > 0.1:
+        while self.travel_duration_s > self.travel_duration_min_s - 0.1:
             for rot_diff in range(5, 175, 5):
                 # print("trying rotation", current_rotation + rot_diff)
                 if self.is_obstacle_ahead(position, current_rotation + rot_diff, travel_distance_m) is True:
@@ -94,7 +94,10 @@ class TargetAvoid(TargetNone.TargetNone):
             print("[TargetAvoid] dead end within", travel_distance_m,"m,",self.travel_duration_s,"s")
             self.travel_duration_s = self.travel_duration_s / 2.0
             travel_distance_m = speed_ms * self.travel_duration_s
-            print("Lower travel distance to", travel_distance_m,"m,",self.travel_duration_s,"s")
+            print("[TargetAvoid] Lower travel distance to", travel_distance_m,"m,",self.travel_duration_s,"s")
+
+        print("[TargetAvoid] give-up, try 180'", travel_distance_m, "m,", self.travel_duration_s, "s")
+        self.rot_diff = 180
 
     def is_obstacle_ahead(self, position, rotation, distance_m):
         # print("Checking rotation", rotation)
