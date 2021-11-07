@@ -1,0 +1,14 @@
+{"map": "CM.terrn2",
+  "position": "276 0 256",
+  "rotation": "0",
+  "truck": "gavrilb.truck",
+  "enter": "",
+  "target": "random_waypoint,avoid",
+  "bound": [0.0, 0.0, 500.0, 500.0],
+  "direction": "truck_rotation",
+  "speed": "truck_throttle",
+  "throttle_percent": 60.0,
+  "reset": "non_const,out_of_bound",
+  "save": "avoid",
+  "avoid": []
+}
