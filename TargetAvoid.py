@@ -68,7 +68,7 @@ class TargetAvoid(TargetNone.TargetNone):
 
             return self.rot_diff + rot_diff, self.target_speed_ms, self.go_up
         else:
-            return rot_diff, self.target_speed_ms, self.go_up
+            return self.rot_diff + rot_diff, self.target_speed_ms, self.go_up
 
     def find_avoidance_parameters(self, position, rotation):
         speed_ms = 2.8  # FIXME hard coded value
