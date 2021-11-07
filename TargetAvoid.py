@@ -77,7 +77,7 @@ class TargetAvoid(TargetNone.TargetNone):
             return
 
         while self.travel_duration_s > 0.1:
-            for rot_diff in range(5, 90, 5):
+            for rot_diff in range(5, 175, 5):
                 # print("trying rotation", current_rotation + rot_diff)
                 if self.is_obstacle_ahead(position, current_rotation + rot_diff, travel_distance_m) is True:
                     # print("rotation", -rot_diff, "OK")
