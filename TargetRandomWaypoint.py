@@ -64,16 +64,11 @@ class TargetRandomWaypoint(TargetNone.TargetNone):
             print("[Target random waypoint] timeout - new way point", self.rand_x, self.rand_y)
 
     def calc_rotation(self, position, rotation):
-        waypoint_angle = Math.calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
+        waypoint_angle = Math.calc_angle([position[0], position[2] - 1.0], [position[0], position[2]],
                                          [self.rand_x,
                                           self.rand_y])
 
-        if waypoint_angle > 0:
-            target_angle = waypoint_angle - 180.0
-        else:
-            target_angle = waypoint_angle + 180.0
-
-        self.rot_diff = rotation[1] - target_angle
+        self.rot_diff = rotation[1] - waypoint_angle
 
         if self.rot_diff > 180.0:
             self.rot_diff = self.rot_diff - 360.0
