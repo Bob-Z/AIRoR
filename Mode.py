@@ -113,9 +113,11 @@ class Mode:
             self.height.run(go_up)
 
             is_reset = False
+            reset_position = None
             for r in self.reset:
-                if r.run(position, speed_ms) is True:
-                    is_reset = True
+                is_reset, reset_position = r.run(position, speed_ms)
+                if is_reset is True:
+                    break
 
             if is_reset is True:
                 for t in self.target:
@@ -125,7 +127,7 @@ class Mode:
                 self.height.reset()
                 for r in self.reset:
                     r.reset()
-                self.save.reset(position)
+                self.save.reset(reset_position)
 
 
 def push_position_button():

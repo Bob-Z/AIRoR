@@ -25,6 +25,6 @@ class ResetOutOfBound(ResetNone.ResetNone):
             time.sleep(0.1)
             Command.stop_COMMON_RESET_TRUCK()
 
-            return True
+            return True, position
 
-        return False
+        return False, None

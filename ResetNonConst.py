@@ -14,6 +14,7 @@ class ResetNonConst(ResetNone.ResetNone):
         self.move_step_qty = 0
         self.const_step_qty = 0
         self.non_target_step_qty = 0
+        self.non_const_detected_position = None
 
     def run(self, position, current_speed_ms):
         if self.is_move_detected is False:
@@ -32,7 +33,10 @@ class ResetNonConst(ResetNone.ResetNone):
                     self.target_speed = current_speed_ms
                     self.non_target_step_qty = 0
                 else:
-                    #print("Target speed diff = ", self.target_speed - current_speed_ms)
+                    # print("Target speed diff = ", self.target_speed - current_speed_ms)
+                    if self.non_target_step_qty == 0:
+                        self.non_const_detected_position = position
+                        print("[Reset non const] suspicious NON target speed detected")
                     self.non_target_step_qty += 1
 
         if self.is_move_detected is False:
@@ -44,7 +48,7 @@ class ResetNonConst(ResetNone.ResetNone):
                 if self.const_step_qty > 10:
                     self.is_target_speed_detected = True
                     self.target_speed = current_speed_ms
-                    #print("Target speed = ", self.target_speed)
+                    # print("Target speed = ", self.target_speed)
             else:
                 if self.non_target_step_qty > 10:
                     print("[Reset non const] NON target speed detected - reset Vehicle")
@@ -52,7 +56,6 @@ class ResetNonConst(ResetNone.ResetNone):
                     time.sleep(0.1)
                     Command.stop_COMMON_RESET_TRUCK()
 
-                    return True
+                    return True, self.non_const_detected_position
 
-        return False
-
+        return False, None

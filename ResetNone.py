@@ -3,7 +3,7 @@ class ResetNone:
         pass
 
     def run(self, position, current_speed_ms):
-        return False
+        return False, None
 
     def reset(self):
         self.__init__()
