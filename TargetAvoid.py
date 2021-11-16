@@ -9,6 +9,7 @@ import TargetNone
 class TargetAvoid(TargetNone.TargetNone):
     def __init__(self):
         self.avoid_coordinate = Config.config['avoid']
+        self.vehicle_width = Config.config['vehicle_width']
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
 
         self.target_speed_ms = 0.0
@@ -129,19 +130,19 @@ class TargetAvoid(TargetNone.TargetNone):
         rect = [
             [
                 0,
-                -2.0  # FIX ME hard coded value - 2 meters right
+                - self.vehicle_width/2.0
             ],
             [
                 0,
-                2.0  # FIX ME hard coded value - 2 meters left
+                self.vehicle_width/2.0
             ],
             [
-                -distance_m,  # FIX ME hard coded value - 50 meters ahead
-                2.0  # FIX ME hard coded value - 2 meters left
+                -distance_m,
+                self.vehicle_width/2.0
             ],
             [
-                -distance_m,  # FIX ME hard coded value - 50 meters ahead
-                -2.0  # FIX ME hard coded value - 2 meters right
+                -distance_m,
+                - self.vehicle_width/2.0
             ]
         ]
 
