@@ -31,6 +31,8 @@ class ResetNonConst(ResetNone.ResetNone):
             else:
                 if current_speed_ms * 0.90 < self.target_speed < current_speed_ms * 1.10:
                     self.target_speed = current_speed_ms
+                    if self.non_target_step_qty != 0:
+                        print("[Reset non const] target speed detected")
                     self.non_target_step_qty = 0
                 else:
                     # print("Target speed diff = ", self.target_speed - current_speed_ms)
