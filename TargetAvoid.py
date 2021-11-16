@@ -9,8 +9,12 @@ import TargetNone
 class TargetAvoid(TargetNone.TargetNone):
     def __init__(self):
         self.avoid_coordinate = Config.config['avoid']
-        self.vehicle_width = Config.config['vehicle_width']
+        self.vehicle_width = 4.0
+        if 'vehicle_width' in Config.config:
+            self.vehicle_width = Config.config['vehicle_width']
+            
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
+        print("[Target avoid] vehicle width:", self.vehicle_width)
 
         self.target_speed_ms = 0.0
         self.rot_diff = 0.0
@@ -34,6 +38,7 @@ class TargetAvoid(TargetNone.TargetNone):
     def reset(self):
         self.avoid_coordinate = Config.config['avoid']
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
+        print("[Target avoid] vehicle width:", self.vehicle_width )
 
         self.target_speed_ms = 0.0
         self.rot_diff = 0.0
