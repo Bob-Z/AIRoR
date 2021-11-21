@@ -11,8 +11,8 @@ class TargetAvoid(TargetNone.TargetNone):
         self.avoid_coordinate = Config.config['avoid']
         self.vehicle_width = 4.0
         if 'vehicle_width' in Config.config:
-            self.vehicle_width = Config.config['vehicle_width']
-            
+            self.vehicle_width = Config.config['vehicle_width'] * 0.33 # Avoidance coordinates are at vehicle "center". So we can bet a smaller vehicle can pass closer.
+
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
         print("[Target avoid] vehicle width:", self.vehicle_width)
 
