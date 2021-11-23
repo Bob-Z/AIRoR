@@ -99,31 +99,40 @@ class TargetAvoid(TargetNone.TargetNone):
             self.is_give_up = False
             return
 
-        while self.travel_duration_s > self.travel_duration_min_s - 0.1:
-            for try_rot_diff in range(5, 175, 5):
-                # print("trying rotation", current_rotation + try_rot_diff)
-                if self.is_no_obstacle_ahead(position, current_rotation + try_rot_diff, travel_distance_m) is True:
-                    # print("rotation", -try_rot_diff, "OK")
-                    self.rot_diff = -try_rot_diff
-                    self.target_speed_ms = speed_ms
-                    self.is_give_up = False
-                    self.previous_angle_sign = -1
-                    return
-                # print("trying rotation", current_rotation - rot_diff)
-                if self.is_no_obstacle_ahead(position, current_rotation - try_rot_diff, travel_distance_m) is True:
-                    # print("rotation", try_rot_diff, "OK")
-                    self.rot_diff = try_rot_diff
-                    self.target_speed_ms = speed_ms
-                    self.is_give_up = False
-                    self.previous_angle_sign = 1
-                    return
+        current_detection_width_m = self.vehicle_width
 
-            print("[TargetAvoid] dead end within", travel_distance_m, "m,", self.travel_duration_s, "s")
-            self.travel_duration_s = self.travel_duration_s / 2.0
-            travel_distance_m = speed_ms * self.travel_duration_s
-            print("[TargetAvoid] Lower travel distance to", travel_distance_m, "m,", self.travel_duration_s, "s")
+        while current_detection_width_m <= self.vehicle_width / 2.0:
+            current_travel_duration_s = self.travel_duration_s
+            while current_travel_duration_s >= self.travel_duration_min_s - 0.1:
+                for try_rot_diff in range(5, 175, 5):
+                    # print("trying rotation", current_rotation + try_rot_diff)
+                    if self.is_no_obstacle_ahead(position, current_rotation + try_rot_diff, travel_distance_m) is True:
+                        # print("rotation", -try_rot_diff, "OK")
+                        self.rot_diff = -try_rot_diff
+                        self.target_speed_ms = speed_ms
+                        self.is_give_up = False
+                        self.previous_angle_sign = -1
+                        return
+                    # print("trying rotation", current_rotation - rot_diff)
+                    if self.is_no_obstacle_ahead(position, current_rotation - try_rot_diff, travel_distance_m) is True:
+                        # print("rotation", try_rot_diff, "OK")
+                        self.rot_diff = try_rot_diff
+                        self.target_speed_ms = speed_ms
+                        self.is_give_up = False
+                        self.previous_angle_sign = 1
+                        return
 
-        self.rot_diff = self.previous_angle_sign * 180
+                print("[TargetAvoid] dead end within", travel_distance_m, "m,", self.travel_duration_s, "s")
+                current_travel_duration_s = current_travel_duration_s / 2.0
+                travel_distance_m = speed_ms * current_travel_duration_s
+                print("[TargetAvoid] Lower travel distance to", travel_distance_m, "m,", current_travel_duration_s, "s")
+
+            print("[TargetAvoid] dead end for detection width = ", current_detection_width_m, "m")
+            current_detection_width_m = current_detection_width_m / 2.0
+            print("[TargetAvoid] Lower detection width to ", current_detection_width_m, "m")
+
+        #self.rot_diff = self.previous_angle_sign * 180
+        self.rot_diff = 0
         if self.is_give_up is False:
             print("[TargetAvoid] give-up, trying", self.rot_diff)
         self.is_give_up = True
