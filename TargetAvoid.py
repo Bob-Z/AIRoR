@@ -101,7 +101,7 @@ class TargetAvoid(TargetNone.TargetNone):
 
         current_detection_width_m = self.vehicle_width
 
-        while current_detection_width_m <= self.vehicle_width / 2.0:
+        while current_detection_width_m >= self.vehicle_width / 2.0:
             current_travel_duration_s = self.travel_duration_s
             while current_travel_duration_s >= self.travel_duration_min_s - 0.1:
                 for try_rot_diff in range(5, 175, 5):
