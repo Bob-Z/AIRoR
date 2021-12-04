@@ -1,0 +1,16 @@
+{
+  "map": "a1da0UID-nhelens.terrn2",
+  "position":"460 0 1365",
+  "rotation": "225",
+  "truck": "780dUIDweaselciv.boat",
+  "enter": "",
+  "target": "random_waypoint,avoid",
+  "vehicle_width": 2.5,
+  "direction": "boat_rotation",
+  "speed": "boat_throttle",
+  "throttle_time: 1.5,
+  "reset": "non_const,out_of_bound,slow",
+  "bound": [0.0, 750.0, 1005.0, 1980.0],
+  "save": "avoid",
+  "avoid": []
+}

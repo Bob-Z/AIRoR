@@ -17,6 +17,7 @@ import ResetSlowSpeed
 import SaveAvoid
 import SaveNone
 import SpeedBoatTarget
+import SpeedBoatThrottle
 import SpeedNone
 import SpeedTruckMax
 import SpeedTruckRandom
@@ -70,6 +71,8 @@ class Mode:
                 self.speed = SpeedTruckThrottle.SpeedTruckThrottle()
             elif Config.config['speed'] == 'boat_target':
                 self.speed = SpeedBoatTarget.SpeedBoatTarget()
+            elif Config.config['speed'] == 'boat_throttle':
+                self.speed = SpeedBoatThrottle.SpeedBoatThrottle()
 
         self.height = HeightNone.HeightNone()
         if 'height' in Config.config:
