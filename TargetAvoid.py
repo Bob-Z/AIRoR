@@ -26,7 +26,11 @@ class TargetAvoid(TargetNone.TargetNone):
         self.obstacle_ahead = False
 
         self.travel_duration_min_s = 3.0
+        if 'travel_time_min' in Config.config:
+            self.travel_duration_min_s = Config.config['travel_time_min']
         self.travel_duration_max_s = 8.0
+        if 'travel_time_max' in Config.config:
+            self.travel_duration_max_s = Config.config['travel_time_max']
         self.init_travel_duration_s = self.travel_duration_min_s
         self.travel_duration_s = self.init_travel_duration_s
         print("[Target avoid] travel_duration =", self.travel_duration_s)
