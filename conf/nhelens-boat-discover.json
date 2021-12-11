@@ -10,7 +10,7 @@
   "travel_time_max": 15.0,
   "direction": "boat_rotation",
   "speed": "boat_throttle",
-  "throttle_time": 1.5,
+  "throttle_time": 0.5,
   "reset": "non_const,out_of_bound,slow",
   "bound": [0.0, 750.0, 1005.0, 1980.0],
   "save": "avoid",
