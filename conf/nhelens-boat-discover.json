@@ -4,7 +4,7 @@
   "rotation": "225",
   "truck": "780dUIDweaselciv.boat",
   "enter": "",
-  "target": "random_waypoint,avoid",
+  "target": "avoid",
   "vehicle_width": 2.5,
   "direction": "boat_rotation",
   "speed": "boat_throttle",
