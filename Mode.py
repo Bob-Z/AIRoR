@@ -132,6 +132,8 @@ class Mode:
                     r.reset()
                 self.save.reset(reset_position)
 
+                Input.reset()
+
 
 def push_position_button():
     while True:

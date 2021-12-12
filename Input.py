@@ -37,7 +37,7 @@ def init():
     if 'enter' in Config.config:
         args.append('-enter')
 
-    cmd = subprocess.Popen(args,  stdout=subprocess.PIPE)
+    cmd = subprocess.Popen(args, stdout=subprocess.PIPE)
 
     thread = threading.Thread(target=read_stdin, args=(cmd.stdout,))
     thread.start()
@@ -143,3 +143,15 @@ def get_rotation_speed():
 def is_started():
     global started
     return started
+
+
+def reset():
+    global started
+    global lock
+    global speed
+    global rotation_speed
+    lock.acquire()
+    started = False
+    speed = [0.0, 0.0, 0.0]
+    rotation_speed = [0.0, 0.0, 0.0]
+    lock.release()
