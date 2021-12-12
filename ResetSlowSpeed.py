@@ -14,11 +14,11 @@ class ResetSlowSpeed(ResetNone.ResetNone):
     def run(self, position, current_speed_ms):
         if current_speed_ms < 0.05:
             if self.slow_speed is False:
-                print("Slow speed detected")
+                print("[Reset slow speed] Slow speed detected")
             self.slow_speed = True
         else:
             if self.slow_speed is True:
-                print("Slow speed reset")
+                print("[Reset slow speed] No slow speed anymore")
             self.slow_speed = False
 
         if self.previous_slow_speed is False and self.slow_speed is True:
@@ -28,7 +28,7 @@ class ResetSlowSpeed(ResetNone.ResetNone):
 
         if self.slow_speed is True and datetime.datetime.now() > self.slow_speed_timestamp + datetime.timedelta(
                 seconds=4):
-            print("Reset vehicle")
+            print("[Reset slow speed] Reset vehicle")
             Command.start_COMMON_RESET_TRUCK()
             time.sleep(0.1)
             Command.stop_COMMON_RESET_TRUCK()
