@@ -8,13 +8,13 @@ import TargetNone
 class TargetWaypoint(TargetNone.TargetNone):
     def __init__(self, reverse=False):
         self.waypoint = Config.config['waypoint']
-        print("Target mode waypoint: " + str(len(self.waypoint)) + " waypoints")
+        print("[Target waypoint] " + str(len(self.waypoint)) + " waypoints")
 
         if 'proximity_timeout' in Config.config:
             self.proximity_timeout = Config.config['proximity_timeout']
         else:
             self.proximity_timeout = 0.5
-        print("Target mode waypoint: proximity timeout = " + str(self.proximity_timeout))
+        print("[Target waypoint] proximity timeout = " + str(self.proximity_timeout))
 
         self.event_ahead_qty = 1
 
@@ -30,6 +30,21 @@ class TargetWaypoint(TargetNone.TargetNone):
 
         self.reverse = reverse
 
+    def reset(self):
+        self.event_ahead_qty = 1
+
+        self.current_waypoint = 0
+        self.prev_rotation = [0.0, 0.0, 0.0]
+
+        self.target_speed_ms = self.waypoint[self.current_waypoint][3] * 1000 / 3600
+        self.rot_diff = 0.0
+
+        self.previous_height = 0.0
+        self.height_event_ahead_qty = 10
+        self.go_up = False
+
+        print("[Target waypoint] reset")
+
     def run(self, position, rotation, speed_ms, rot_diff, target_speed_ms, go_up):
         self.check_waypoint_distance(position, speed_ms)
 
@@ -40,17 +55,21 @@ class TargetWaypoint(TargetNone.TargetNone):
         return self.rot_diff, self.target_speed_ms, self.go_up
 
     def check_waypoint_distance(self, position, speed_ms):
-        dist_x = position[0] - self.waypoint[self.current_waypoint][0]
-        dist_z = position[1] - self.waypoint[self.current_waypoint][1]
-        dist_y = position[2] - self.waypoint[self.current_waypoint][2]
-        distance = math.sqrt(dist_x * dist_x + dist_y * dist_y + dist_z * dist_z)
-        # print("distance: ", distance)
-
-        proximity_distance = speed_ms * self.proximity_timeout  # distance in 0.5 seconds
+        proximity_distance = speed_ms * self.proximity_timeout
         if proximity_distance < 2.0:
             proximity_distance = 2.0
 
-        if distance < proximity_distance:
+        waypoint_changed = False
+
+        while True:
+            dist_x = position[0] - self.waypoint[self.current_waypoint][0]
+            dist_z = position[1] - self.waypoint[self.current_waypoint][1]
+            dist_y = position[2] - self.waypoint[self.current_waypoint][2]
+            distance = math.sqrt(dist_x * dist_x + dist_y * dist_y + dist_z * dist_z)
+
+            if distance > proximity_distance:
+                break
+
             if self.reverse is False:
                 new_waypoint = (self.current_waypoint + 1) % len(self.waypoint)
             else:
@@ -64,10 +83,13 @@ class TargetWaypoint(TargetNone.TargetNone):
             if self.waypoint[self.current_waypoint][4] >= 0:
                 self.event_ahead_qty = self.waypoint[self.current_waypoint][4]
 
-            print("waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ",
-                  self.event_ahead_qty)
-
             self.current_waypoint = new_waypoint
+
+            waypoint_changed = True
+
+        if waypoint_changed is True:
+            print("[Target Waypoint] new waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ",
+                  self.event_ahead_qty)
 
     def check_rotation(self, position, rotation):
         waypoint_angle = Math.calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
