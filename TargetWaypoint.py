@@ -20,6 +20,7 @@ class TargetWaypoint(TargetNone.TargetNone):
 
         self.current_waypoint = 0
         self.prev_rotation = [0.0, 0.0, 0.0]
+        self.previous_rotation_present = False
 
         self.target_speed_ms = self.waypoint[self.current_waypoint][3] * 1000 / 3600
         self.rot_diff = 0.0
@@ -35,6 +36,7 @@ class TargetWaypoint(TargetNone.TargetNone):
 
         self.current_waypoint = 0
         self.prev_rotation = [0.0, 0.0, 0.0]
+        self.previous_rotation_present = False
 
         self.target_speed_ms = self.waypoint[self.current_waypoint][3] * 1000 / 3600
         self.rot_diff = 0.0
@@ -92,33 +94,37 @@ class TargetWaypoint(TargetNone.TargetNone):
                   self.event_ahead_qty)
 
     def check_rotation(self, position, rotation):
-        waypoint_angle = Math.calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
-                                         [self.waypoint[self.current_waypoint][0],
-                                          self.waypoint[self.current_waypoint][2]])
-
-        if waypoint_angle > 0:
-            target_angle = waypoint_angle - 180.0
+        if self.previous_rotation_present is False:
+            self.prev_rotation = rotation
+            self.previous_rotation_present = True
         else:
-            target_angle = waypoint_angle + 180.0
-        # print('target_angle: ', target_angle)
-        # print('rotation:', rotation)
+            waypoint_angle = Math.calc_angle([position[0], position[2] + 1.0], [position[0], position[2]],
+                                             [self.waypoint[self.current_waypoint][0],
+                                              self.waypoint[self.current_waypoint][2]])
 
-        # diff_rot = rotation[1] - target_angle
-        # print('rotation[1] - target_angle:', diff_rot)
+            if waypoint_angle > 0:
+                target_angle = waypoint_angle - 180.0
+            else:
+                target_angle = waypoint_angle + 180.0
+            # print('target_angle: ', target_angle)
+            # print('rotation:', rotation)
 
-        rotation_since_previous_event = self.prev_rotation[1] - rotation[1]
+            # diff_rot = rotation[1] - target_angle
+            # print('rotation[1] - target_angle:', diff_rot)
 
-        next_diff_rot = rotation[1] - (self.event_ahead_qty * rotation_since_previous_event) - target_angle
+            rotation_since_previous_event = self.prev_rotation[1] - rotation[1]
 
-        self.prev_rotation = rotation
+            next_diff_rot = rotation[1] - (self.event_ahead_qty * rotation_since_previous_event) - target_angle
 
-        if next_diff_rot > 180.0:
-            next_diff_rot = next_diff_rot - 360.0
-        if next_diff_rot < -180.0:
-            next_diff_rot = 360.0 + next_diff_rot
-        # print("diff_rot = ", diff_rot)
+            self.prev_rotation = rotation
 
-        self.rot_diff = next_diff_rot
+            if next_diff_rot > 180.0:
+                next_diff_rot = next_diff_rot - 360.0
+            if next_diff_rot < -180.0:
+                next_diff_rot = 360.0 + next_diff_rot
+            # print("diff_rot = ", diff_rot)
+
+            self.rot_diff = next_diff_rot
 
     def check_height(self, position):
         height_since_previous_event = self.previous_height - position[1]
