@@ -25,6 +25,7 @@ import SpeedTruckTarget
 import SpeedTruckThrottle
 import TargetAvoid
 import TargetNone
+import TargetRandomAngle
 import TargetRandomWaypoint
 import TargetWaypoint
 import TargetWaypointReverse
@@ -47,6 +48,8 @@ class Mode:
                     self.target.append(TargetAvoid.TargetAvoid())
                 elif t == 'random_waypoint':
                     self.target.append(TargetRandomWaypoint.TargetRandomWaypoint())
+                elif t == 'random_angle':
+                    self.target.append(TargetRandomAngle.TargetRandomAngle())
         else:
             self.target = [TargetNone.TargetNone()]
 

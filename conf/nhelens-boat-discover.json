@@ -4,7 +4,7 @@
   "rotation": "225",
   "truck": "780dUIDweaselciv.boat",
   "enter": "",
-  "target": "avoid",
+  "target": "random_angle,avoid",
   "vehicle_width": 5.0,
   "travel_time_min": 15.0,
   "travel_time_max": 20.0,
