@@ -1,0 +1,1 @@
+{"map": "mountainRoad.terrn2", "position": "2790 1666 2618", "rotation": "270", "truck": "gavrilrally.truck", "enter": "", "target": "avoid", "vehicle_width": 25.0, "travel_time_min": 6.0, "travel_time_max": 10.0, "direction": "truck_rotation", "speed": "truck_throttle", "throttle_percent": 65.0, "reset": "non_const,slow", "save": "avoid", "avoid": []}
