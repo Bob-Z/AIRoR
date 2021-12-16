@@ -70,8 +70,10 @@ TRUCK_BRAKE                    JoystickAxis         0 2 UPPER\n\
 ;TRUCK_AUTOSHIFT_DOWN           JoystickPov          0 0 South\n\
 ;TRUCK_HORN                     JoystickButton       0 8\n\
 ;TRUCK_PARKING_BRAKE            JoystickButton       0 5\n\
-;TRUCK_SHIFT_DOWN               JoystickButton       0 1\n\
-;TRUCK_SHIFT_UP                 JoystickButton       0 2\n\
+TRUCK_AUTOSHIFT_DOWN               JoystickButton       0 3\n\
+TRUCK_AUTOSHIFT_UP                 JoystickButton       0 4\n\
+;TRUCK_SHIFT_DOWN               JoystickButton       0 3\n\
+;TRUCK_SHIFT_UP                 JoystickButton       0 4\n\
 ;TRUCK_MANUAL_CLUTCH                       JoystickButton       0 4\n\
 ;TRUCK_STARTER                  JoystickButton       0 0\n\
 TRUCK_STEER_LEFT               JoystickAxis         0 0 LOWER\n\
@@ -79,8 +81,8 @@ TRUCK_STEER_RIGHT              JoystickAxis         0 0 UPPER\n\
 ;TRUCK_TOGGLE_CONTACT           JoystickButton       0 9\n\
 \n\
 ; COMMANDS\n\
-COMMANDS_01                    JoystickButton       0 4\n\
-COMMANDS_02                    JoystickButton       0 5\n\
+COMMANDS_01                    JoystickButton       0 5\n\
+COMMANDS_02                    JoystickButton       0 6\n\
 "
 
 
@@ -258,3 +260,23 @@ def start_COMMANDS_02():
 def stop_COMMANDS_02():
     # print("stop_command_2")
     joy_release(libevdev.EV_KEY.BTN_Z)
+
+
+def start_AUTOSHIFT_DOWN():
+    #print("start_autoshift_down")
+    joy_press(libevdev.EV_KEY.BTN_NORTH)
+
+
+def stop_AUTOSHIFT_DOWN():
+    #print("stop_autoshift_down")
+    joy_release(libevdev.EV_KEY.BTN_NORTH)
+
+
+def start_AUTOSHIFT_UP():
+    # print("start_autoshift_up")
+    joy_press(libevdev.EV_KEY.BTN_TR)
+
+
+def stop_AUTOSHIFT_UP():
+    # print("stop_autoshift_up")
+    joy_release(libevdev.EV_KEY.BTN_TR)

@@ -102,3 +102,23 @@ def start_COMMANDS_02():
 def stop_COMMANDS_02():
     if os.name == 'posix':
         CommandLinux.stop_COMMANDS_02()
+
+
+def start_AUTOSHIFT_DOWN():
+    if os.name == 'posix':
+        CommandLinux.start_AUTOSHIFT_DOWN()
+
+
+def stop_AUTOSHIFT_DOWN():
+    if os.name == 'posix':
+        CommandLinux.stop_AUTOSHIFT_DOWN()
+
+
+def start_AUTOSHIFT_UP():
+    if os.name == 'posix':
+        CommandLinux.start_AUTOSHIFT_UP()
+
+
+def stop_SHIFT_UP():
+    if os.name == 'posix':
+        CommandLinux.stop_AUTOSHIFT_UP()
