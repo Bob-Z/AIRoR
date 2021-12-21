@@ -5,6 +5,7 @@
   "target": "waypoint",
   "direction": "truck_rotation",
   "speed": "truck_target",
+  "max_traction": 80,
   "reset": "slow",
   "comment":["X", "Z", "Y", "Max speed", "Direction smoothness"],
   "waypoint":
