@@ -1,4 +1,5 @@
 import Command
+import Config
 import SpeedNone
 
 
@@ -12,12 +13,16 @@ class SpeedTruckTarget(SpeedNone.SpeedNone):
         self.num_previous_speed = 4
         self.previous_speed_array = []
 
+        self.max_traction = 100
+        if 'max_traction' in Config.config:
+            self.max_traction = Config.config['max_traction']
+
         for i in range(0, self.num_previous_speed):
             self.previous_speed_array.append(1000000.0)
 
     def run(self, current_speed_ms, target_speed_ms):
         if self.current_target_speed_ms != target_speed_ms:
-            self.traction_force = 100
+            self.traction_force = self.max_traction
 
         self.current_target_speed_ms = target_speed_ms
 
@@ -45,8 +50,8 @@ class SpeedTruckTarget(SpeedNone.SpeedNone):
 
         if decelerate is True:
             self.traction_force += 5
-            if self.traction_force > 100:
-                self.traction_force = 100
+            if self.traction_force > self.max_traction:
+                self.traction_force = self.max_traction
 
     def forward(self):
         self.go_forward = True
