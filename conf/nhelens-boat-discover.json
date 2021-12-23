@@ -1,7 +1,7 @@
 {
   "map": "a1da0UID-nhelens.terrn2",
-  "position":"260 0 1165",
-  "rotation": "225",
+  "position":"360 0 1435",
+  "rotation": "135",
   "truck": "780dUIDweaselciv.boat",
   "enter": "",
   "target": "random_angle,avoid",
@@ -13,6 +13,5 @@
   "throttle_time": 0.5,
   "reset": "non_const,out_of_bound,slow",
   "bound": [0.0, 750.0, 1005.0, 1980.0],
-  "save": "avoid",
-  "avoid": []
+  "save": "avoid"
 }
