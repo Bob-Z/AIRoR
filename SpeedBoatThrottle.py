@@ -6,14 +6,17 @@ import Config
 
 class SpeedBoatThrottle(SpeedNone.SpeedNone):
     def __init__(self):
-        self.timeout_start = datetime.datetime.now()
         self.throttle_timeout = 1.5
         if 'throttle_time' in Config.config_json:
             self.throttle_timeout = Config.config_json['throttle_time']
+        self.timeout_start = None
 
     def run(self, current_speed_ms, target_speed_ms):
+        if self.timeout_start is None:
+            self.timeout_start = datetime.datetime.now()
+
         if datetime.datetime.now() > self.timeout_start + datetime.timedelta(
-            seconds=self.throttle_timeout):
+                seconds=self.throttle_timeout):
             Command.TRUCK_BRAKE(0)
             Command.TRUCK_ACCELERATE(0)
         else:
@@ -22,7 +25,3 @@ class SpeedBoatThrottle(SpeedNone.SpeedNone):
 
     def reset(self):
         self.__init__()
-        self.timeout_start = datetime.datetime.now()
-        Command.TRUCK_BRAKE(0)
-        Command.TRUCK_ACCELERATE(0)
-
