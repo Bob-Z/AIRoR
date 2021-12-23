@@ -37,8 +37,8 @@ class Mode:
         self.thread.start()
 
         self.target = []
-        if 'target' in Config.config:
-            all_target = Config.config['target'].split(',')
+        if 'target' in Config.config_json:
+            all_target = Config.config_json['target'].split(',')
             for t in all_target:
                 if t == 'waypoint':
                     self.target.append(TargetWaypoint.TargetWaypoint())
@@ -54,37 +54,37 @@ class Mode:
             self.target = [TargetNone.TargetNone()]
 
         self.direction = DirectionNone.DirectionNone()
-        if 'direction' in Config.config:
-            if Config.config['direction'] == 'truck_rotation':
+        if 'direction' in Config.config_json:
+            if Config.config_json['direction'] == 'truck_rotation':
                 self.direction = DirectionTruckRotation.DirectionTruckRotation()
-            elif Config.config['direction'] == 'truck_random':
+            elif Config.config_json['direction'] == 'truck_random':
                 self.direction = DirectionTruckRandom.DirectionTruckRandom()
-            elif Config.config['direction'] == 'boat_rotation':
+            elif Config.config_json['direction'] == 'boat_rotation':
                 self.direction = DirectionBoatRotation.DirectionBoatRotation()
 
         self.speed = SpeedNone.SpeedNone()
-        if 'speed' in Config.config:
-            if Config.config['speed'] == 'truck_random':
+        if 'speed' in Config.config_json:
+            if Config.config_json['speed'] == 'truck_random':
                 self.speed = SpeedTruckRandom.SpeedTruckRandom()
-            elif Config.config['speed'] == 'truck_target':
+            elif Config.config_json['speed'] == 'truck_target':
                 self.speed = SpeedTruckTarget.SpeedTruckTarget()
-            elif Config.config['speed'] == 'truck_max':
+            elif Config.config_json['speed'] == 'truck_max':
                 self.speed = SpeedTruckMax.SpeedTruckMax()
-            elif Config.config['speed'] == 'truck_throttle':
+            elif Config.config_json['speed'] == 'truck_throttle':
                 self.speed = SpeedTruckThrottle.SpeedTruckThrottle()
-            elif Config.config['speed'] == 'boat_target':
+            elif Config.config_json['speed'] == 'boat_target':
                 self.speed = SpeedBoatTarget.SpeedBoatTarget()
-            elif Config.config['speed'] == 'boat_throttle':
+            elif Config.config_json['speed'] == 'boat_throttle':
                 self.speed = SpeedBoatThrottle.SpeedBoatThrottle()
 
         self.height = HeightNone.HeightNone()
-        if 'height' in Config.config:
-            if Config.config['height'] == 'heli':
+        if 'height' in Config.config_json:
+            if Config.config_json['height'] == 'heli':
                 self.height = HeightHeli.HeightHeli()
 
         self.reset = []
-        if 'reset' in Config.config:
-            all_reset = Config.config['reset'].split(',')
+        if 'reset' in Config.config_json:
+            all_reset = Config.config_json['reset'].split(',')
             for r in all_reset:
                 if r == 'slow':
                     self.reset.append(ResetSlowSpeed.ResetSlowSpeed())
@@ -94,8 +94,8 @@ class Mode:
                     self.reset.append(ResetOutOfBound.ResetOutOfBound())
 
         self.save = SaveNone.SaveNone()
-        if 'save' in Config.config:
-            if Config.config['save'] == 'avoid':
+        if 'save' in Config.config_json:
+            if Config.config_json['save'] == 'avoid':
                 self.save = SaveAvoid.SaveAvoid()
 
     def run(self):

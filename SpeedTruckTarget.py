@@ -14,8 +14,8 @@ class SpeedTruckTarget(SpeedNone.SpeedNone):
         self.previous_speed_array = []
 
         self.max_traction = 100
-        if 'max_traction' in Config.config:
-            self.max_traction = Config.config['max_traction']
+        if 'max_traction' in Config.config_json:
+            self.max_traction = Config.config_json['max_traction']
 
         for i in range(0, self.num_previous_speed):
             self.previous_speed_array.append(1000000.0)

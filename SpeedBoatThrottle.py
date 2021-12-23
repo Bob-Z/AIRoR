@@ -8,8 +8,8 @@ class SpeedBoatThrottle(SpeedNone.SpeedNone):
     def __init__(self):
         self.timeout_start = datetime.datetime.now()
         self.throttle_timeout = 1.5
-        if 'throttle_time' in Config.config:
-            self.throttle_timeout = Config.config['throttle_time']
+        if 'throttle_time' in Config.config_json:
+            self.throttle_timeout = Config.config_json['throttle_time']
 
     def run(self, current_speed_ms, target_speed_ms):
         if datetime.datetime.now() > self.timeout_start + datetime.timedelta(

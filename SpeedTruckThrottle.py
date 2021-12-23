@@ -8,8 +8,8 @@ import datetime
 
 class SpeedTruckThrottle(SpeedNone.SpeedNone):
     def __init__(self):
-        if 'throttle_percent' in Config.config:
-            self.throttle_percent = Config.config['throttle_percent']
+        if 'throttle_percent' in Config.config_json:
+            self.throttle_percent = Config.config_json['throttle_percent']
         else:
             self.throttle_percent = 50.0
 

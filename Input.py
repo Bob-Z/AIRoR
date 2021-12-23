@@ -18,23 +18,23 @@ lock = threading.Lock()
 def init():
     args = [sys.argv[1]]
 
-    if 'map' in Config.config:
+    if 'map' in Config.config_json:
         args.append('-map')
-        args.append(Config.config['map'])
+        args.append(Config.config_json['map'])
 
-    if 'position' in Config.config:
+    if 'position' in Config.config_json:
         args.append('-pos')
-        args.append(Config.config['position'])
+        args.append(Config.config_json['position'])
 
-    if 'rotation' in Config.config:
+    if 'rotation' in Config.config_json:
         args.append('-rot')
-        args.append(Config.config['rotation'])
+        args.append(Config.config_json['rotation'])
 
-    if 'truck' in Config.config:
+    if 'truck' in Config.config_json:
         args.append('-truck')
-        args.append(Config.config['truck'])
+        args.append(Config.config_json['truck'])
 
-    if 'enter' in Config.config:
+    if 'enter' in Config.config_json:
         args.append('-enter')
 
     cmd = subprocess.Popen(args, stdout=subprocess.PIPE)

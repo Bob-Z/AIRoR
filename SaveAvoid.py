@@ -9,10 +9,10 @@ class SaveAvoid:
         pass
 
     def reset(self, position):
-        if 'avoid' not in Config.config:
-            Config.config['avoid'] = []
+        if 'avoid' not in Config.save_json:
+            Config.save_json['avoid'] = []
 
-        Config.config['avoid'].append(position)
+        Config.save_json['avoid'].append(position)
 
         Config.save()
 

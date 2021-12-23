@@ -8,10 +8,10 @@ import TargetNone
 
 class TargetAvoid(TargetNone.TargetNone):
     def __init__(self):
-        self.avoid_coordinate = Config.config['avoid']
+        self.avoid_coordinate = Config.config_json['avoid']
         self.vehicle_width = 4.0
-        if 'vehicle_width' in Config.config:
-            self.vehicle_width = Config.config[
+        if 'vehicle_width' in Config.config_json:
+            self.vehicle_width = Config.config_json[
                                      'vehicle_width'] * 0.33  # Avoidance coordinates are at vehicle "center". So we can bet a smaller vehicle can pass closer.
 
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
@@ -26,11 +26,11 @@ class TargetAvoid(TargetNone.TargetNone):
         self.obstacle_ahead = False
 
         self.travel_duration_min_s = 2.0
-        if 'travel_time_min' in Config.config:
-            self.travel_duration_min_s = Config.config['travel_time_min']
+        if 'travel_time_min' in Config.config_json:
+            self.travel_duration_min_s = Config.config_json['travel_time_min']
         self.travel_duration_max_s = 3.0
-        if 'travel_time_max' in Config.config:
-            self.travel_duration_max_s = Config.config['travel_time_max']
+        if 'travel_time_max' in Config.config_json:
+            self.travel_duration_max_s = Config.config_json['travel_time_max']
         self.init_travel_duration_s = self.travel_duration_min_s
         self.travel_duration_s = self.init_travel_duration_s
         print("[Target avoid] travel_duration =", self.travel_duration_s)
@@ -40,7 +40,7 @@ class TargetAvoid(TargetNone.TargetNone):
         self.previous_angle_sign = 1
 
     def reset(self):
-        self.avoid_coordinate = Config.config['avoid']
+        self.avoid_coordinate = Config.config_json['avoid']
         print("[Target avoid] " + str(len(self.avoid_coordinate)) + " avoidance coordinates")
         print("[Target avoid] vehicle width:", self.vehicle_width)
 

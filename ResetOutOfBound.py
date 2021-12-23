@@ -10,8 +10,8 @@ class ResetOutOfBound(ResetNone.ResetNone):
         # This is "simple" terrain bounds
         self.bound = [487.0, 487.0, 537.0, 537.0]
 
-        if 'bound' in Config.config:
-            self.bound = Config.config['bound']
+        if 'bound' in Config.config_json:
+            self.bound = Config.config_json['bound']
 
     def run(self, position, current_speed_ms):
         minX = min(self.bound[0], self.bound[2])

@@ -12,15 +12,15 @@ class TargetRandomWaypoint(TargetNone.TargetNone):
         # self.waypoint = Config.config['waypoint']
         print("Target mode random waypoint")
 
-        if 'proximity_distance' in Config.config:
-            self.proximity_distance = Config.config['proximity_distance']
+        if 'proximity_distance' in Config.config_json:
+            self.proximity_distance = Config.config_json['proximity_distance']
         else:
             self.proximity_distance = 10
         print("[Target random waypoint] proximity distance = " + str(self.proximity_distance))
 
         self.bound = [0.0, 0.0, 5000.0, 5000.0]
-        if 'bound' in Config.config:
-            self.bound = Config.config['bound']
+        if 'bound' in Config.config_json:
+            self.bound = Config.config_json['bound']
         print("[Target random waypoint] bound =", self.bound)
 
         self.rand_x = self.get_random_x()

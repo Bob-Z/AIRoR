@@ -7,11 +7,11 @@ import TargetNone
 
 class TargetWaypoint(TargetNone.TargetNone):
     def __init__(self, reverse=False):
-        self.waypoint = Config.config['waypoint']
+        self.waypoint = Config.config_json['waypoint']
         print("[Target waypoint] " + str(len(self.waypoint)) + " waypoints")
 
-        if 'proximity_timeout' in Config.config:
-            self.proximity_timeout = Config.config['proximity_timeout']
+        if 'proximity_timeout' in Config.config_json:
+            self.proximity_timeout = Config.config_json['proximity_timeout']
         else:
             self.proximity_timeout = 0.5
         print("[Target waypoint] proximity timeout = " + str(self.proximity_timeout))

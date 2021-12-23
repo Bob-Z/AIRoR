@@ -3,7 +3,7 @@
   "rotation": "0",
   "truck": "gavrilb.truck",
   "enter": "",
-  "target": "random_waypoint,avoid",
+  "target": "random_angle,avoid",
   "bound": [0.0, 0.0, 500.0, 500.0],
   "direction": "truck_rotation",
   "speed": "truck_throttle",
