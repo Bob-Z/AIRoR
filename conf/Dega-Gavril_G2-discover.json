@@ -5,7 +5,7 @@
 "truck": "gavrilrally.truck",
 "enter": "",
 "target": "avoid",
-"vehicle_width": 25.0,
+"vehicle_width": 8.25,
 "travel_time_min": 2.0,
 "travel_time_max": 3.0,
 "direction": "truck_rotation",

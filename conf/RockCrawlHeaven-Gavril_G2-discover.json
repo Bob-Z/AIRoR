@@ -1,1 +1,15 @@
-{"map": "RockCrawlHeaven.terrn2", "position": "1930 0 2155", "rotation": "180", "truck": "gavrilb.truck", "enter": "", "target": "random_waypoint,avoid", "vehicle_width": 2.5, "direction": "truck_rotation", "speed": "truck_throttle", "throttle_percent": 60.0, "reset": "non_const,out_of_bound", "bound": [10.0, 10.0, 2990.0, 2990.0], "save": "avoid", "avoid": []}
+{
+  "map": "RockCrawlHeaven.terrn2",
+  "position": "1930 0 2155",
+  "rotation": "180",
+  "truck": "gavrilb.truck",
+  "enter": "",
+  "target": "random_waypoint,avoid",
+  "vehicle_width": 0.825,
+  "direction": "truck_rotation",
+  "speed": "truck_throttle",
+  "throttle_percent": 60.0,
+  "reset": "non_const,out_of_bound",
+  "bound": [10.0, 10.0, 2990.0, 2990.0],
+  "save": "avoid"
+}
