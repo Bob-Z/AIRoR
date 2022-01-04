@@ -17,6 +17,8 @@ class SpeedTruckTarget(SpeedNone.SpeedNone):
         if 'max_traction' in Config.config_json:
             self.max_traction = Config.config_json['max_traction']
 
+        self.is_accelerating = False
+
         for i in range(0, self.num_previous_speed):
             self.previous_speed_array.append(1000000.0)
 
@@ -28,11 +30,27 @@ class SpeedTruckTarget(SpeedNone.SpeedNone):
 
         if current_speed_ms < target_speed_ms:
             self.traction_on(self.traction_force)
+
+            if self.is_accelerating is True:
+                self.max_traction = min(self.max_traction + 0.1, 100)
+            else:
+                self.max_traction = Config.config_json['max_traction']
+            print(self.max_traction)
+
+            self.is_accelerating = True
         else:
             if current_speed_ms > target_speed_ms + target_speed_ms * 0.1:
                 self.traction_off(self.traction_force)
             else:
                 self.traction_off(0)
+
+            if self.is_accelerating is False:
+                self.max_traction = min(self.max_traction + 0.1, 100)
+            else:
+                self.max_traction = Config.config_json['max_traction']
+            print(self.max_traction)
+
+            self.is_accelerating = False
 
             self.traction_force -= 5
 
