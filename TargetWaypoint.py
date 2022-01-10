@@ -90,7 +90,7 @@ class TargetWaypoint(TargetNone.TargetNone):
             waypoint_changed = True
 
         if waypoint_changed is True:
-            print("[Target Waypoint] new waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ",
+            print("[Target Waypoint] next waypoint ", new_waypoint, "speed kmh = ", self.target_speed_ms / 1000 * 3600, ", event ahead = ",
                   self.event_ahead_qty)
 
     def check_rotation(self, position, rotation):
