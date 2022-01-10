@@ -48,8 +48,8 @@ BOAT_CENTER_RUDDER            JoystickButton       0 3\n\
 ;CAMERA_ROTATE_RIGHT            JoystickAxis         0 3 UPPER\n\
 \n\
 ; CHARACTER\n\
-CHARACTER_BACKWARDS            JoystickAxis         0 1 UPPER\n\
-CHARACTER_FORWARD              JoystickAxis         0 1 LOWER\n\
+CHARACTER_BACKWARDS            JoystickAxis         0 2 UPPER\n\
+CHARACTER_FORWARD              JoystickAxis         0 1 UPPER\n\
 CHARACTER_JUMP                 JoystickButton       0 0\n\
 CHARACTER_LEFT                 JoystickAxis         0 0 LOWER\n\
 CHARACTER_RIGHT                JoystickAxis         0 0 UPPER\n\

@@ -26,3 +26,8 @@ class SpeedTruckThrottle(SpeedNone.SpeedNone):
 
         else:  # Initial full throttle to start engine
             Command.TRUCK_ACCELERATE(100.0)
+
+    def reset(self):
+        Command.TRUCK_BRAKE(0)
+        Command.TRUCK_ACCELERATE(0)
+        self.__init__()

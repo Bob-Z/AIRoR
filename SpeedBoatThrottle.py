@@ -24,4 +24,6 @@ class SpeedBoatThrottle(SpeedNone.SpeedNone):
             Command.TRUCK_ACCELERATE(100)
 
     def reset(self):
+        Command.TRUCK_BRAKE(0)
+        Command.TRUCK_ACCELERATE(0)
         self.__init__()

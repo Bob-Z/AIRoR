@@ -31,3 +31,6 @@ class SpeedTruckRandom(SpeedNone.SpeedNone):
             print("Random speed: ", self.random_speed_ms)
 
         self.traction.run(speed_ms, self.random_speed_ms)
+
+    def reset(self):
+        self.__init__()

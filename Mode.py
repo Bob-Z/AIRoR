@@ -1,7 +1,6 @@
 import threading
 import time
 
-import Command
 import Config
 import DirectionBoatRotation
 import DirectionNone
@@ -33,9 +32,6 @@ import TargetWaypointReverse
 
 class Mode:
     def __init__(self):
-        self.thread = threading.Thread(target=push_position_button)
-        self.thread.start()
-
         self.target = []
         if 'target' in Config.config_json:
             all_target = Config.config_json['target'].split(',')
@@ -102,30 +98,42 @@ class Mode:
         while True:
             Event.wait()
 
-            position = Input.get_position()
-            rotation = Input.get_rotation()
-            speed_ms = Input.get_speed_norm()
+            if Input.is_reset_forced() is False:
+                position = Input.get_position()
+                rotation = Input.get_rotation()
+                speed_ms = Input.get_speed_norm()
 
-            rot_diff = 0.0
-            target_speed_ms = 0.0
-            go_up = False
-            for t in self.target:
-                rot_diff, target_speed_ms, go_up = t.run(position, rotation, speed_ms, rot_diff, target_speed_ms, go_up)
+                rot_diff = 0.0
+                target_speed_ms = 0.0
+                go_up = False
+                for t in self.target:
+                    rot_diff, target_speed_ms, go_up = t.run(position, rotation, speed_ms, rot_diff, target_speed_ms, go_up)
 
-            self.direction.run(rot_diff)
+                self.direction.run(rot_diff)
 
-            self.speed.run(speed_ms, target_speed_ms)
+                self.speed.run(speed_ms, target_speed_ms)
 
-            self.height.run(go_up)
+                self.height.run(go_up)
 
-            is_reset = False
-            reset_position = None
-            for r in self.reset:
-                is_reset, reset_position = r.run(position, speed_ms)
+                is_reset = False
+                reset_position = None
+                for r in self.reset:
+                    is_reset, reset_position = r.run(position, speed_ms)
+                    if is_reset is True:
+                        break
+
                 if is_reset is True:
-                    break
+                    for t in self.target:
+                        t.reset()
+                    self.direction.reset()
+                    self.speed.reset()
+                    self.height.reset()
+                    for r in self.reset:
+                        r.reset()
+                    self.save.reset(reset_position)
 
-            if is_reset is True:
+                    Input.reset()
+            else: # force reset
                 for t in self.target:
                     t.reset()
                 self.direction.reset()
@@ -133,14 +141,7 @@ class Mode:
                 self.height.reset()
                 for r in self.reset:
                     r.reset()
-                self.save.reset(reset_position)
+                # no save on forced reset
+                #self.save.reset(reset_position)
 
                 Input.reset()
-
-
-def push_position_button():
-    while True:
-        Command.start_COMMON_OUTPUT_POSITION()
-        time.sleep(0.05)
-        Command.stop_COMMON_OUTPUT_POSITION()
-        time.sleep(0.05)

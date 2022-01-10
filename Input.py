@@ -1,18 +1,23 @@
 import datetime
 import math
+import os
 import subprocess
 import sys
+import time
 import threading
 
 import Config
+import Command
 import Event
 
-started = False
+first_data = True
 position = None
 rotation = None
 speed = None
 rotation_speed = None
 lock = threading.Lock()
+is_pushing = False
+force_reset = False
 
 
 def init():
@@ -42,6 +47,9 @@ def init():
     thread = threading.Thread(target=read_stdin, args=(cmd.stdout,))
     thread.start()
 
+    thread_push = threading.Thread(target=push_position_button)
+    thread_push.start()
+
 
 def read_stdin(ror_input):
     previous_position = [0.0, 0.0, 0.0]
@@ -63,13 +71,17 @@ def read_stdin(ror_input):
                     lock.acquire()
                     position = [float(numeric_value[0]), float(numeric_value[1]), float(numeric_value[2])]
                     rotation = [float(numeric_value[3]), float(numeric_value[4]), float(numeric_value[5])]
-                    global started
-                    if started is False:
+                    global first_data
+                    if first_data is True:
                         previous_position = position
                         previous_rotation = rotation
                         speed = [0.0, 0.0, 0.0]
                         rotation_speed = [0.0, 0.0, 0.0]
-                        started = True
+                        first_data = False
+
+                        global is_pushing
+                        if is_pushing is False:
+                            is_pushing = True
                     else:
                         duration = timestamp - previous_timestamp
                         # print("duration", duration.total_seconds())
@@ -87,10 +99,31 @@ def read_stdin(ror_input):
                     # print("pos", position)
                     # print("rot", rotation)
                     # print("spd", speed)
-                else:
-                    print(line)
 
-                # print(line, end='')
+                elif line[0:49] == "[RoR|CVar]             sim_state:  \"2\" (was: \"1\")":
+                    is_pushing = False
+                    print(line, end='')
+                    print("AIRoR paused")
+                elif line[0:49] == "[RoR|CVar]             sim_state:  \"1\" (was: \"2\")":
+                    print(line, end='')
+                    global force_reset
+                    force_reset = True
+
+                    Command.start_COMMON_RESET_TRUCK()
+                    time.sleep(0.1)
+                    Command.stop_COMMON_RESET_TRUCK()
+
+                    Event.set_event()
+                    Event.clear_event()
+
+                    print("AIRoR reset")
+                elif line[0:49] == "[RoR|CVar]             app_state:  \"3\" (was: \"2\")":
+                    print(line, end='')
+                    print("AIRoR exit")
+                    os._exit(0)
+                else:
+                    print(line, end='')
+
         except UnicodeDecodeError:
             print("UnicodeDecodeError exception")
 
@@ -140,18 +173,36 @@ def get_rotation_speed():
     return ret_speed
 
 
-def is_started():
-    global started
-    return started
-
-
 def reset():
-    global started
+    global first_data
     global lock
     global speed
     global rotation_speed
     lock.acquire()
-    started = False
+    first_data = True
     speed = [0.0, 0.0, 0.0]
     rotation_speed = [0.0, 0.0, 0.0]
     lock.release()
+
+
+def push_position_button():
+    global is_pushing
+
+    while True:
+        if is_pushing is False:
+            time.sleep(0.1)
+        else:
+            while is_pushing is True:
+                Command.start_COMMON_OUTPUT_POSITION()
+                time.sleep(0.05)
+                Command.stop_COMMON_OUTPUT_POSITION()
+                time.sleep(0.05)
+
+
+def is_reset_forced():
+    global force_reset
+    if force_reset is True:
+        force_reset = False
+        return True
+    else:
+        return False
