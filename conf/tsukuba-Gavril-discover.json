@@ -1,0 +1,16 @@
+{
+  "map": "ts.terrn2",
+  "position": "444 1 521",
+  "rotation": "180",
+  "truck": "gavrilb.truck",
+  "enter": "",
+  "target": "avoid",
+  "vehicle_width": 8.0,
+  "travel_time_min": 5.0,
+  "travel_time_max": 6.0,
+  "direction": "truck_rotation",
+  "speed": "truck_throttle",
+  "throttle_percent": 63.0,
+  "reset": "non_const",
+  "save": "avoid"
+}
