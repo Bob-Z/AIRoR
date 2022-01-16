@@ -15,8 +15,7 @@ class SpeedTruckThrottle(SpeedNone.SpeedNone):
 
         self.start_time = datetime.datetime.now()
 
-        # Force shortest gear
-        Command.start_AUTOSHIFT_DOWN()
+        self.is_autoshift_down = False
 
         print("[Speed truck throttle] ", self.throttle_percent, "%")
 
@@ -26,6 +25,13 @@ class SpeedTruckThrottle(SpeedNone.SpeedNone):
 
         else:  # Initial full throttle to start engine
             Command.TRUCK_ACCELERATE(100.0)
+
+        if self.is_autoshift_down is True:
+            Command.stop_AUTOSHIFT_DOWN()
+            self.is_autoshift_down = False
+        else:
+            Command.start_AUTOSHIFT_DOWN()
+            self.is_autoshift_down = True
 
     def reset(self):
         Command.TRUCK_BRAKE(0)
