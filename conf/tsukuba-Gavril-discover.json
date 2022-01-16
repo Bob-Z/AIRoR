@@ -5,7 +5,7 @@
   "truck": "gavrilb.truck",
   "enter": "",
   "target": "avoid",
-  "vehicle_width": 8.0,
+  "vehicle_width": 3.0,
   "travel_time_min": 5.0,
   "travel_time_max": 6.0,
   "direction": "truck_rotation",
