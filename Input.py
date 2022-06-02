@@ -18,7 +18,7 @@ rotation_speed = None
 lock = threading.Lock()
 is_pushing = False
 force_reset = False
-
+log_file = open("position.txt", "w")
 
 def init():
     args = [sys.argv[1]]
@@ -55,11 +55,16 @@ def read_stdin(ror_input):
     previous_position = [0.0, 0.0, 0.0]
     previous_rotation = [0.0, 0.0, 0.0]
     previous_timestamp = datetime.datetime.now()
+
+    global log_file
+
     while True:
         try:
             for byte_array_line in ror_input:
                 line = byte_array_line.decode('utf-8')
                 if line[0:9] == "Position:":
+                    log_file.write(line)
+
                     timestamp = datetime.datetime.now()
                     stripped = line.replace('\x1b[0m\n', '').replace(' ', '')
                     data = stripped.split(':')
@@ -120,6 +125,9 @@ def read_stdin(ror_input):
                 elif line[0:49] == "[RoR|CVar]             app_state:  \"3\" (was: \"2\")":
                     print(line, end='')
                     print("AIRoR exit")
+
+                    log_file.close()
+
                     os._exit(0)
                 else:
                     print(line, end='')
